@@ -45,7 +45,7 @@
         const RotateCcw = () => <span role="img" aria-label="rotate">🔄</span>;
         const Heart = () => <span role="img" aria-label="heart" className="inline text-red-500">❤️</span>;
 
-const ExamSimulation = () => {
+const ExamSimulation = ({ newExercises }) => {
   const [examStarted, setExamStarted] = React.useState(false);
   const [timeLeft, setTimeLeft] = React.useState(90 * 60); // 90 minutes in seconds
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
@@ -2985,7 +2985,7 @@ constraints: {
                   {problemTypes.map(type => 
                     activeSection === type.id && renderStrategies(type.id)
                   )}
-{activeSection === 'examMode' && <ExamSimulation />}
+{activeSection === 'examMode' && <ExamSimulation newExercises={newExercises} />}
                 </div>
 
                 <div className="text-center mt-16 py-10 border-t-2 border-gradient-to-r from-blue-200 to-purple-200">

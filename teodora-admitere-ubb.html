@@ -73,7 +73,7 @@ const ExamSimulation = ({ newExercises }) => {
     Object.entries(distribution).forEach(([category, count]) => {
       const categoryExercises = newExercises[category] || [];
       const shuffled = [...categoryExercises].sort(() => Math.random() - 0.5);
-      allExercises.push(...shuffled.slice(0, Math.min(count, categoryExercises.length)));
+      allExercises.push(...shuffled.slice(0, Math.min(count, categoryExercises.length)).map(ex => ({ ...ex, category })));
     });
 
     return allExercises.sort(() => Math.random() - 0.5).slice(0, 40);
@@ -107,11 +107,27 @@ const ExamSimulation = ({ newExercises }) => {
 
   const calculateResults = () => {
     let correct = 0;
+    const byCategory = {};
+
     examQuestions.forEach((question, index) => {
-      if (examAnswers[index] === question.correct) correct++;
+        const category = question.category || 'unknown';
+        if (!byCategory[category]) {
+            byCategory[category] = { correct: 0, total: 0 };
+        }
+        byCategory[category].total++;
+        if (examAnswers[index] === question.correct) {
+            correct++;
+            byCategory[category].correct++;
+        }
     });
-    return { correct, total: examQuestions.length, percentage: (correct / examQuestions.length * 100).toFixed(1) };
-  };
+
+    return { 
+        correct, 
+        total: examQuestions.length, 
+        percentage: (correct / examQuestions.length * 100).toFixed(1),
+        byCategory 
+    };
+};
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -124,21 +140,26 @@ const ExamSimulation = ({ newExercises }) => {
       <div className="text-center space-y-8">
         <div className="bg-gradient-to-r from-red-400 to-orange-500 text-white rounded-2xl p-8">
           <h2 className="text-4xl font-bold mb-4">📝 Simulare Examen UBB</h2>
-          <p className="text-xl mb-6">Test complet în condiții reale de examen</p>
+          <p className="text-xl mb-6">Test complet în condiții reale de examen.</p>
           <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-              <h3 className="font-bold">⏰ Timp</h3>
-              <p>90 minute exacte</p>
-            </div>
-            <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-              <h3 className="font-bold">📊 Întrebări</h3>
-              <p>40 exerciții mixte</p>
-            </div>
-            <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-              <h3 className="font-bold">🎯 Rezultat</h3>
-              <p>Analiză detaliată</p>
-            </div>
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg"><h3 className="font-bold">⏰ Timp</h3><p>90 minute exacte</p></div>
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg"><h3 className="font-bold">📊 Întrebări</h3><p>40 exerciții mixte</p></div>
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg"><h3 className="font-bold">🎯 Rezultat</h3><p>Analiză detaliată</p></div>
           </div>
+          
+          <div className="max-w-3xl mx-auto bg-white text-gray-800 rounded-xl p-6 mb-8 shadow-lg border-t-4 border-purple-400">
+            <h3 className="text-xl font-semibold text-purple-800 mb-3 flex items-center justify-center">
+              <Heart /> <span className="ml-2">Pentru Teodora, înainte să începi...</span>
+            </h3>
+            <p className="text-gray-700 leading-relaxed text-left">
+              Acest moment este al tău. Ai muncit, ai învățat, ai crescut. 
+              Fiecare exercițiu rezolvat te-a adus mai aproape de visul tău.
+              Acum respiră adânc, zâmbește și arată-le tuturor cât de pregătită ești!
+              <br/><br/>
+              <strong className="text-purple-600">Nu ești singură. Sunt cu tine la fiecare pas! 🚀</strong>
+            </p>
+          </div>
+
           <button
             onClick={startExam}
             className="bg-white text-red-600 px-8 py-4 rounded-lg font-bold text-xl hover:bg-gray-100 transition-colors"
@@ -168,7 +189,25 @@ const ExamSimulation = ({ newExercises }) => {
              results.percentage >= 50 ? '📚 Bine, dar mai antrenează!' :
              '💪 Continuă să exersezi - progresul vine!'}
           </div>
-
+      <div className="mt-8 pt-6 border-t border-gray-200 text-left">
+        <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">Analiză pe Categorii</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          {Object.entries(results.byCategory).map(([category, scores]) => (
+            <div key={category} className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-gray-700 capitalize">{category.replace(/([A-Z])/g, ' $1').trim()}</h4>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-blue-600 font-bold text-lg">{scores.correct} / {scores.total} corecte</span>
+                <span className={`font-bold ${scores.correct / scores.total >= 0.7 ? 'text-green-600' : 'text-red-500'}`}>
+                  {((scores.correct / scores.total) * 100).toFixed(0)}%
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                 <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: `${(scores.correct / scores.total) * 100}%` }}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
           <button
             onClick={() => {setExamStarted(false); setExamFinished(false);}}
             className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
@@ -252,6 +291,72 @@ const ExamSimulation = ({ newExercises }) => {
           const [expandedTips, setExpandedTips] = React.useState({});
           const [selectedDifficulty, setSelectedDifficulty] = React.useState('toate');
           const [streak, setStreak] = React.useState(0);
+          const [shuffledExercises, setShuffledExercises] = React.useState({});
+          const motivationalMessages = [
+    "🔥 Ești de neoprit! Keep it up!",
+    "🚀 Pur și simplu fantastic! Următoarea!",
+    "⭐ Wow! Creierul tău funcționează la turație maximă!",
+    "💪 Asta înseamnă concentrare! Bravo, Teodora!",
+    "🎯 Perfect! Exact asta e atitudinea de campioană!"
+];
+          // Save Progress functionality
+React.useEffect(() => {
+  // Load progress on component mount
+  const savedProgress = localStorage.getItem('teodora-admitere-progress');
+  if (savedProgress) {
+    try {
+      const progress = JSON.parse(savedProgress);
+      setUserAnswers(progress.userAnswers || {});
+      setStreak(progress.streak || 0);
+      setCompletedSections(new Set(progress.completedSections || []));
+      if (progress.lastSection) {
+        setActiveSection(progress.lastSection);
+      }
+    } catch (e) {
+      console.log('Could not load saved progress');
+    }
+  }
+}, []);
+
+// Save progress whenever important state changes
+React.useEffect(() => {
+  const progress = {
+    userAnswers,
+    streak,
+    completedSections: Array.from(completedSections),
+    lastSection: activeSection,
+    lastSaved: new Date().toISOString()
+  };
+  localStorage.setItem('teodora-admitere-progress', JSON.stringify(progress));
+}, [userAnswers, streak, completedSections, activeSection]);
+
+const clearProgress = () => {
+  if (confirm('Ești sigură că vrei să ștergi tot progresul? Această acțiune nu poate fi anulată.')) {
+    localStorage.removeItem('teodora-admitere-progress');
+    setUserAnswers({});
+    setStreak(0);
+    setCompletedSections(new Set());
+    setActiveSection('overview');
+  }
+};
+const shuffleSection = (sectionId) => {
+  const exercisesToShuffle = [...(newExercises[sectionId] || [])];
+  const shuffled = exercisesToShuffle.sort(() => Math.random() - 0.5);
+  setShuffledExercises(prev => ({ ...prev, [sectionId]: shuffled }));
+};
+
+const resetSectionAnswers = (sectionId) => {
+  if (!confirm(`Ești sigură că vrei să resetezi răspunsurile pentru secțiunea "${sectionId}"?`)) return;
+  
+  const newAnswers = { ...userAnswers };
+  Object.keys(newAnswers).forEach(key => {
+    if (key.startsWith(`${sectionId}-`)) {
+      delete newAnswers[key];
+    }
+  });
+  setUserAnswers(newAnswers);
+  setStreak(0); // Reset streak as well
+};
 
           // Exerciții noi create special pentru Teodora 💕
           const newExercises = {
@@ -2292,6 +2397,125 @@ spatial: [
     explanation: "Unghiul de simetrie = 360°/n = 36°.",
     tip: "Împarte 360° la numărul de laturi.",
   },
+  /* 33 - Desfășurare cub 1 */
+{
+  question: "Care dintre următoarele desfășurări NU poate forma un cub valid?",
+  options: [
+    "Cruce cu 4 pătrate pe verticală și câte 1 pe laterale la al 2-lea pătrat",
+    "L mare cu 4 pătrate pe bază și 2 deasupra",
+    "T cu 3 pătrate pe orizontală și 3 pe verticală",
+    "Linie cu 4 pătrate și 2 lateral alternativ",
+    "Z cu 3 pătrate diagonală și câte 1 lateral"
+  ],
+  correct: 2,
+  difficulty: "mediu",
+  explanation: "T-ul cu 3×3 are 9 pătrate, dar cubul are doar 6 fețe. Toate celelalte sunt desfășurări valide standard.",
+  tip: "Un cub are exact 6 fețe. Numără întâi pătratele, apoi verifică dacă se pot plia să se întâlnească corect."
+},
+
+/* 34 - Desfășurare cub 2 */
+{
+  question: "Într-o desfășurare de cub, fața cu numărul 1 este opusă feței cu 6, fața cu 2 este opusă lui 5. Dacă vezi 1, 2 și 3 pe fețe adiacente (1 sus, 2 față, 3 dreapta), ce număr este pe fața din spate?",
+  options: ["4", "5", "6", "Nu se poate determina", "3"],
+  correct: 0,
+  difficulty: "greu",
+  explanation: "Fețele vizibile: 1(sus), 2(față), 3(dreapta). Opusele lor: 6(jos), 5(spate), 4(stânga). Deci spate = 4.",
+  tip: "În orice cub, suma fețelor opuse = 7. Desenează mental cubul și marchează sistematic fețele."
+},
+
+/* 35 - Desfășurare cub 3 */
+{
+  question: "O furnică merge pe muchiile unui cub desfășurat plan. Care e numărul MINIM de muchii pentru a vizita toate cele 6 fețe exact o dată, începând din centrul unei fețe?",
+  options: ["5", "6", "7", "8", "9"],
+  correct: 0,
+  difficulty: "greu",
+  explanation: "Pe desfășurare, furnica poate traversa 5 muchii pentru a atinge toate cele 6 fețe (începe într-o față = 1 față vizitată gratuit).",
+  tip: "Pe desfășurare, fețele adiacente = 1 muchie. Caută drumul hamiltonian minimal."
+},
+
+/* 36 - Desfășurare cub 4 */
+{
+  question: "Dacă tai un cub de-a lungul a 7 muchii pentru a-l desfășura plan, care dintre următoarele NU poate fi forma rezultată?",
+  options: [
+    "O cruce perfectă",
+    "Un șir liniar de 6 pătrate",
+    "Forma literei T",
+    "Un pătrat 3×3 cu 3 pătrate lipsă",
+    "Forma literei L"
+  ],
+  correct: 3,
+  difficulty: "mediu",
+  explanation: "Un pătrat 3×3 are 9 poziții, minus 3 = 6 pătrate, DAR acestea nu pot fi toate conectate prin muchii pentru orice alegere de 3 lipsă.",
+  tip: "Orice desfășurare validă trebuie să aibă toate cele 6 pătrate conectate prin muchii comune."
+},
+
+/* 37 - Knight/Knave 1 */
+{
+  question: "Pe insula logicienilor: Cavalerii spun mereu adevărul, Escrocii mint mereu. A spune: 'Eu sunt escroc'. Ce este A?",
+  options: [
+    "Cavaler",
+    "Escroc", 
+    "Poate fi oricare",
+    "Paradox - nu poate exista",
+    "Depinde de context"
+  ],
+  correct: 3,
+  difficulty: "mediu",
+  explanation: "Paradox clasic: Dacă A = cavaler → spune adevărul → 'sunt escroc' e adevărat → contradicție. Dacă A = escroc → minte → 'sunt escroc' e fals → ar fi cavaler → contradicție.",
+  tip: "Când cineva vorbește despre propria sa natură, verifică ambele cazuri pentru contradicții."
+},
+
+/* 38 - Knight/Knave 2 */
+{
+  question: "A zice: 'B este escroc'. B zice: 'A și cu mine suntem de tipuri diferite'. Ce sunt A și B?",
+  options: [
+    "A = Cavaler, B = Escroc",
+    "A = Escroc, B = Cavaler",
+    "Ambii Cavaleri",
+    "Ambii Escroci",
+    "Nu se poate determina"
+  ],
+  correct: 0,
+  difficulty: "greu",
+  explanation: "Dacă A = cavaler → B = escroc (A spune adevărul) → B minte → 'tipuri diferite' e fals → sunt de același tip → contradicție cu B = escroc. Deci A = escroc → B = cavaler → verifică!",
+  tip: "Începe cu o ipoteză și urmărește lanțul logic până găsești contradicție sau confirmare."
+},
+
+/* 39 - Knight/Knave 3 */
+{
+  question: "Trei persoane A, B, C. A: 'Toți suntem escroci'. B: 'Exact unul dintre noi e cavaler'. Care poate fi distribuția corectă?",
+  options: [
+    "A=Escroc, B=Cavaler, C=Escroc",
+    "A=Cavaler, B=Escroc, C=Escroc", 
+    "Toți Escroci",
+    "A=Escroc, B=Escroc, C=Cavaler",
+    "Toți Cavaleri"
+  ],
+  correct: 0,
+  difficulty: "greu",
+  explanation: "A zice 'toți escroci' → A nu poate fi cavaler (ar minți). Deci A = escroc. B pretinde '1 cavaler' → dacă B = cavaler, atunci chiar e 1 cavaler (B) → corect! C = escroc pentru a avea exact 1 cavaler.",
+  tip: "Afirmațiile universale ('toți', 'niciunul') elimină rapid posibilități."
+},
+
+/* 40 - Ace de ceas 1 */
+{
+  question: "La ora 3:15, care este unghiul dintre acul orar și cel minutar?",
+  options: ["0°", "7.5°", "15°", "22.5°", "30°"],
+  correct: 1,
+  difficulty: "mediu",
+  explanation: "Minutar la 15 min = 90° de la 12. Orar la 3:15 = 90° + (15/60)×30° = 90° + 7.5° = 97.5°. Unghi între ace = |97.5° - 90°| = 7.5°",
+  tip: "Orar: 30°/oră + 0.5°/minut. Minutar: 6°/minut. Calculează poziția fiecăruia față de ora 12."
+},
+
+/* 41 - Ace de ceas 2 */
+{
+  question: "În câte poziții pe parcursul unei zile (24 ore) acul orar și minutar se suprapun perfect?",
+  options: ["11", "12", "22", "24", "44"],
+  correct: 2,
+  difficulty: "greu",
+  explanation: "Acele se suprapun la fiecare 12/11 ore (minutarul îl prinde pe orar). În 12 ore: 11 suprapuneri. În 24 ore: 22 suprapuneri.",
+  tip: "Viteza relativă: minutarul face 11 rotații mai mult decât orarul în 12 ore."
+},
 ],
 
 math: [
@@ -2574,19 +2798,24 @@ constraints: {
           };
 
           const handleAnswer = (sectionId, exerciseIndex, selectedOption) => {
-            const key = `${sectionId}-${exerciseIndex}`;
-            const exercise = newExercises[sectionId].find((ex, i) => i === exerciseIndex);
-            if (!exercise) return;
-            const isCorrect = selectedOption === exercise.correct;
-            
-            setUserAnswers(prev => ({ ...prev, [key]: selectedOption }));
+    const key = `${sectionId}-${exerciseIndex}`;
+    const exercise = newExercises[sectionId].find((ex, i) => i === exerciseIndex);
+    if (!exercise) return;
+    const isCorrect = selectedOption === exercise.correct;
+    
+    setUserAnswers(prev => ({ ...prev, [key]: selectedOption }));
 
-            if (isCorrect) {
-              setStreak(prev => prev + 1);
-            } else {
-              setStreak(0);
-            }
-          };
+    if (isCorrect) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      if (newStreak > 0 && newStreak % 5 === 0) {
+         const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+         setTimeout(() => alert(`🎉 Streak de ${newStreak} atins! ${randomMessage}`), 100);
+      }
+    } else {
+      setStreak(0);
+    }
+};
           
           const getExerciseIndex = (sectionId, exercise) => {
               return newExercises[sectionId].findIndex(e => e.question === exercise.question);
@@ -2709,7 +2938,7 @@ constraints: {
             const strategy = strategies[sectionId];
             if (!strategy) return null;
 
-            const exercises = newExercises[sectionId] || [];
+            const exercises = (shuffledExercises[sectionId] || newExercises[sectionId]) || [];
             const displayExercises = selectedDifficulty === 'toate' 
               ? exercises 
               : exercises.filter(ex => ex.difficulty === selectedDifficulty);
@@ -2757,21 +2986,23 @@ constraints: {
                       <Target />
                       <span>Exerciții Interactive ({displayExercises.length})</span>
                     </h3>
-                    <div className="flex space-x-2">
-                      {['toate', 'ușor', 'mediu', 'greu'].map(diff => (
-                        <button
-                          key={diff}
-                          onClick={() => setSelectedDifficulty(diff)}
-                          className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                            selectedDifficulty === diff
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {diff.charAt(0).toUpperCase() + diff.slice(1)}
-                        </button>
-                      ))}
-                    </div>
+                    <div className="flex items-center space-x-2">
+  {/* Difficulty Filters */}
+  {['toate', 'ușor', 'mediu', 'greu'].map(diff => (
+    <button key={diff} onClick={() => setSelectedDifficulty(diff)} className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${ selectedDifficulty === diff ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }`}>
+      {diff.charAt(0).toUpperCase() + diff.slice(1)}
+    </button>
+  ))}
+  {/* Control Buttons */}
+  <div className="border-l pl-2 ml-2 flex space-x-2">
+    <button onClick={() => shuffleSection(sectionId)} className="p-2 bg-gray-100 rounded-full hover:bg-blue-100 text-blue-600" title="Amestecă ordinea exercițiilor">
+      <Shuffle />
+    </button>
+    <button onClick={() => resetSectionAnswers(sectionId)} className="p-2 bg-gray-100 rounded-full hover:bg-red-100 text-red-600" title="Resetează răspunsurile din secțiune">
+      <RotateCcw />
+    </button>
+  </div>
+</div>
                   </div>
                   
                   {streak > 0 && (
@@ -3003,6 +3234,14 @@ constraints: {
                         Succes la admitere, Teodora! Știu că vei reuși! 🎓✨
                       </p>
                     </div>
+                    <div className="mt-8 text-center">
+    <button 
+        onClick={clearProgress}
+        className="text-sm text-gray-500 hover:text-red-600 hover:underline transition-colors"
+    >
+        Resetează tot progresul
+    </button>
+</div>
                   </div>
                 </div>
               </div>

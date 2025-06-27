@@ -291,6 +291,7 @@ const ExamSimulation = ({ newExercises }) => {
           const [expandedTips, setExpandedTips] = React.useState({});
           const [selectedDifficulty, setSelectedDifficulty] = React.useState('toate');
           const [streak, setStreak] = React.useState(0);
+          const [infoVisible, setInfoVisible] = React.useState(null);
           const [shuffledExercises, setShuffledExercises] = React.useState({});
           const motivationalMessages = [
     "🔥 Ești de neoprit! Keep it up!",
@@ -1644,13 +1645,13 @@ visualGrids: [
   },
 
   /* 10 */
-  {
+{
     question: "Matrice 3×3 unde fiecare celulă e albă sau neagră. Regula: celulă neagră dacă suma (rând+coloană) e pară. Care celule sunt negre pe rândul 2?",
     options: ["Niciuna", "Doar coloana 2", "Coloanele 1 și 3", "Coloanele 2 și 3", "Toate"],
-    correct: 2,
+    correct: 1,
     difficulty: "mediu",
-    explanation: "R2C1: 2+1=3(impar)→alb, R2C2: 2+2=4(par)→negru, R2C3: 2+3=5(impar)→alb. Dar întrebarea cere celulele negre, verificând din nou: 2+1=3(alb), 2+2=4(negru), 2+3=5(alb). Greșeala mea - răspunsul corect e 'Doar coloana 2', dar în opțiuni cel mai apropiat e coloanele 1 și 3 pentru celulele ALBE. Reformulez: pe rândul 2, celulele negre sunt unde 2+coloană=par, deci coloana 2.",
-    tip: "Par/impar e o regulă frecventă pentru pattern-uri alb/negru."
+    explanation: "Verificăm suma (rând+coloană) pentru fiecare celulă de pe rândul 2: Poziția [2,1]: 2+1=3 (impar) → albă. Poziția [2,2]: 2+2=4 (par) → neagră. Poziția [2,3]: 2+3=5 (impar) → albă. Deci, singura celulă neagră pe rândul 2 este cea de pe coloana 2.",
+    tip: "Par/impar e o regulă frecventă pentru pattern-uri alb/negru, similară cu tabla de șah."
   },
 
   /* 11 */
@@ -2519,206 +2520,29 @@ spatial: [
 ],
 
 math: [
-  /* 1 */
-  {
-    question: "Un preț crește de la 80 lei la 100 lei. Care este procentul de creștere?",
-    options: ["20 %", "22 %", "25 %", "30 %", "18 %"],
-    correct: 2,
-    difficulty: "ușor",
-    explanation: "(100 − 80)/80 = 0,25 ⇒ 25 %.",
-    tip: "Δ / valoarea inițială × 100."
-  },
-
-  /* 2 */
-  {
-    question: "Media aritmetică a numerelor 3, 7, 10, 15 este:",
-    options: ["8,5", "8,75", "9", "9,25", "10"],
-    correct: 1,
-    difficulty: "ușor",
-    explanation: "Suma 35 ÷ 4 = 8,75.",
-    tip: "Împarte suma la numărul de termeni."
-  },
-
-  /* 3 */
-  {
-    question: "Probabilitatea de a extrage o carte de ♠ dintr-un pachet standard este:",
-    options: ["1/13", "1/4", "1/52", "3/52", "1/2"],
-    correct: 1,
-    difficulty: "ușor",
-    explanation: "13 cărți de ♠ / 52 = 1/4.",
-    tip: "Favorable / total."
-  },
-
-  /* 4 */
-  {
-    question: "Rezolvați: 3x − 5 = 16",
-    options: ["5", "6", "7", "8", "9"],
-    correct: 2,
-    difficulty: "ușor",
-    explanation: "3x = 21 ⇒ x = 7.",
-    tip: "Izolează x pas cu pas."
-  },
-
-  /* 5 */
-  {
-    question: "Seria: 2, 6, 12, 20, ?, diferențele cresc cu +2 la fiecare pas.",
-    options: ["28", "30", "32", "34", "36"],
-    correct: 1,
-    difficulty: "ușor",
-    explanation: "Diferențe: +4, +6, +8 ⇒ +10 ⇒ 20 + 10 = 30.",
-    tip: "Calculează progresia diferențelor."
-  },
-
-  /* 6 */
-  {
-    question: "Venitul scade cu 10 %, apoi crește cu 10 %. Rezultatul final este:",
-    options: ["La fel", "Cu 1 % mai mic", "Cu 1 % mai mare", "Cu 2 % mai mic", "Cu 0 % mai mare"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation: "100 → 90 → 99 (−1 %).",
-    tip: "Procentele succesive nu se anulează."
-  },
-
-  /* 7 */
-  {
-    question: "75 % dintre candidați au promovat. Dintre ei, 60 % sunt fete. Ce procent din total sunt fete?",
-    options: ["30 %", "35 %", "40 %", "45 %", "50 %"],
-    correct: 3,
-    difficulty: "mediu",
-    explanation: "0,75 × 0,60 = 0,45 ⇒ 45 %.",
-    tip: "În lanț, înmulțește probabilitățile."
-  },
-
-  /* 8 */
-  {
-    question: "Suma unghiurilor unui poligon convex cu 15 laturi este 2340°. Câte unghiuri pot avea măsura > 150°?",
-    options: ["4", "5", "6", "7", "8"],
-    correct: 2,
-    difficulty: "mediu",
-    explanation: "Peste 150° pot fi cel mult 6 fără a depăși suma totală.",
-    tip: "Compara suma max. posibilă cu 2340°."
-  },
-
-  /* 9 */
-  {
-    question: "Suma a trei numere consecutive este 72. Cel mai mare număr este:",
-    options: ["23", "24", "25", "26", "27"],
-    correct: 2,
-    difficulty: "mediu",
-    explanation: "Media = 72/3 = 24 ⇒ șirul 23, 24, 25.",
-    tip: "Pentru n numere consecutive, media este numărul din mijloc."
-  },
-
-  /* 10 */
-  {
-    question: "Arunci două zaruri. Probabilitatea ca suma să fie 11 este:",
-    options: ["1/18", "1/12", "1/9", "1/6", "1/36"],
-    correct: 0,
-    difficulty: "mediu",
-    explanation: "Perechi favorabile (5,6) și (6,5): 2/36 = 1/18.",
-    tip: "Enumără perechile favorabile."
-  },
-
-  /* 11 */
-  {
-    question: "Rezolvați sistemul: x + y = 7, x − y = 1.",
-    options: ["(4, 3)", "(5, 2)", "(6, 1)", "(3, 4)", "(2, 5)"],
-    correct: 0,
-    difficulty: "mediu",
-    explanation: "Adunând: 2x = 8 ⇒ x = 4, y = 3.",
-    tip: "Adună şi scade ecuaţiile."
-  },
-
-  /* 12 */
-  {
-    question: "Într-o clasă de 40 elevi, 24 fac engleză, 18 franceză, 10 ambele. Câți nu fac nicio limbă?",
-    options: ["6", "8", "10", "12", "14"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation: "|E∪F| = 24+18−10 = 32 ⇒ 40−32 = 8.",
-    tip: "Formula |A∪B| = |A|+|B|−|A∩B|."
-  },
-
-  /* 13 */
-  {
-    question: "Valoarea 5! / (3!·2!) este:",
-    options: ["5", "6", "10", "20", "60"],
-    correct: 2,
-    difficulty: "mediu",
-    explanation: "120 / (6·2) = 10.",
-    tip: "Recunoaște coeficienții binomiali."
-  },
-
-  /* 14 */
-  {
-    question: "Aria unui cerc cu diametrul 14 cm este:",
-    options: ["49π", "98π", "154π", "196π", "7π"],
-    correct: 0,
-    difficulty: "mediu",
-    explanation: "r = 7 ⇒ π·7² = 49π.",
-    tip: "Diametrul / 2 = raza."
-  },
-
-  /* 15 */
-  {
-    question: "Pentru aₙ = 3n² − n, calculați a₄.",
-    options: ["36", "44", "45", "46", "48"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation: "a₄ = 3·16 − 4 = 44.",
-    tip: "Înlocuiește n cu 4."
-  },
-
-  /* 16 */
-  {
-    question: "A doua derivată a funcției f(x) = x³ este:",
-    options: ["6x", "3x²", "3", "6", "x"],
-    correct: 0,
-    difficulty: "greu",
-    explanation: "f′(x)=3x², f″(x)=6x.",
-    tip: "Derivează de două ori succesiv."
-  },
-
-  /* 17 */
-  {
-    question: "log₂ 32 este egal cu:",
-    options: ["4", "5", "6", "8", "10"],
-    correct: 1,
-    difficulty: "greu",
-    explanation: "2⁵ = 32 ⇒ log₂32 = 5.",
-    tip: "Transformă logaritmul în exponent."
-  },
-
-  /* 18 */
-  {
-    question: "O investiție se dublează în 6 ani (dobândă compusă). Rata anuală aproximativă este:",
-    options: ["10 %", "11 %", "12 %", "13 %", "14 %"],
-    correct: 2,
-    difficulty: "greu",
-    explanation: "Regula 72: 72/6 ≈ 12 %.",
-    tip: "Ani × rată ≈ 72."
-  },
-
-  /* 19 */
-  {
-    question: "Soluția inecuației 2x² − 3x − 5 < 0 este:",
-    options: ["x < −1 sau x > 2,5", "−1 < x < 2,5", "x < −2 sau x > 1", "x > 0", "x < 0"],
-    correct: 1,
-    difficulty: "greu",
-    explanation: "Rădăcini: −1 și 2,5; parabolă cu a>0 ⇒ interiorul intervalului.",
-    tip: "Parabola < 0 între rădăcini."
-  },
-
-  /* 20 */
-  {
-    question: "Un salariu de 1500 lei crește anual cu 8 %. Aproximativ, cât va fi după 3 ani?",
-    options: ["1760 lei", "1830 lei", "1897 lei", "1900 lei", "2020 lei"],
-    correct: 2,
-    difficulty: "greu",
-    explanation: "1500·1,08³ ≈ 1500·1,259 ≈ 1897 lei.",
-    tip: "Folosește formula P(1+r)ⁿ."
-  }
-]
+  /* 1 */ { question: "Un preț crește de la 80 lei la 100 lei. Care este procentul de creștere?", options: ["20 %", "22 %", "25 %", "30 %", "18 %"], correct: 2, difficulty: "ușor", explanation: "(100 − 80)/80 = 0,25 ⇒ 25 %.", tip: "Δ / valoarea inițială × 100." },
+  /* 2 */ { question: "Media aritmetică a numerelor 3, 7, 10, 15 este:", options: ["8,5", "8,75", "9", "9,25", "10"], correct: 1, difficulty: "ușor", explanation: "Suma 35 ÷ 4 = 8,75.", tip: "Împarte suma la numărul de termeni." },
+  /* 3 */ { question: "Probabilitatea de a extrage o carte de ♠ dintr-un pachet standard este:", options: ["1/13", "1/4", "1/52", "3/52", "1/2"], correct: 1, difficulty: "ușor", explanation: "13 cărți de ♠ / 52 = 1/4.", tip: "Favorable / total." },
+  /* 4 */ { question: "Rezolvați: 3x − 5 = 16", options: ["5", "6", "7", "8", "9"], correct: 2, difficulty: "ușor", explanation: "3x = 21 ⇒ x = 7.", tip: "Izolează x pas cu pas." },
+  /* 5 */ { question: "Seria: 2, 6, 12, 20, ?, diferențele cresc cu +2 la fiecare pas.", options: ["28", "30", "32", "34", "36"], correct: 1, difficulty: "ușor", explanation: "Diferențe: +4, +6, +8 ⇒ +10 ⇒ 20 + 10 = 30.", tip: "Calculează progresia diferențelor." },
+  /* 6 */ { question: "Venitul scade cu 10 %, apoi crește cu 10 %. Rezultatul final este:", options: ["La fel", "Cu 1 % mai mic", "Cu 1 % mai mare", "Cu 2 % mai mic", "Cu 0 % mai mare"], correct: 1, difficulty: "mediu", explanation: "100 → 90 → 99 (−1 %).", tip: "Procentele succesive nu se anulează." },
+  /* 7 */ { question: "75 % dintre candidați au promovat. Dintre ei, 60 % sunt fete. Ce procent din total sunt fete?", options: ["30 %", "35 %", "40 %", "45 %", "50 %"], correct: 3, difficulty: "mediu", explanation: "0,75 × 0,60 = 0,45 ⇒ 45 %.", tip: "În lanț, înmulțește probabilitățile." },
+  /* 8 */ { question: "Suma unghiurilor unui poligon convex cu 15 laturi este 2340°. Câte unghiuri pot avea măsura > 150°?", options: ["4", "5", "6", "7", "8"], correct: 2, difficulty: "mediu", explanation: "Peste 150° pot fi cel mult 6 fără a depăși suma totală.", tip: "Compara suma max. posibilă cu 2340°." },
+  /* 9 */ { question: "Suma a trei numere consecutive este 72. Cel mai mare număr este:", options: ["23", "24", "25", "26", "27"], correct: 2, difficulty: "mediu", explanation: "Media = 72/3 = 24 ⇒ șirul 23, 24, 25.", tip: "Pentru n numere consecutive, media este numărul din mijloc." },
+  /* 10 */ { question: "Arunci două zaruri. Probabilitatea ca suma să fie 11 este:", options: ["1/18", "1/12", "1/9", "1/6", "1/36"], correct: 0, difficulty: "mediu", explanation: "Perechi favorabile (5,6) și (6,5): 2/36 = 1/18.", tip: "Enumără perechile favorabile." },
+  /* 11 */ { question: "Rezolvați sistemul: x + y = 7, x − y = 1.", options: ["(4, 3)", "(5, 2)", "(6, 1)", "(3, 4)", "(2, 5)"], correct: 0, difficulty: "mediu", explanation: "Adunând: 2x = 8 ⇒ x = 4, y = 3.", tip: "Adună şi scade ecuaţiile." },
+  /* 12 */ { question: "Într-o clasă de 40 elevi, 24 fac engleză, 18 franceză, 10 ambele. Câți nu fac nicio limbă?", options: ["6", "8", "10", "12", "14"], correct: 1, difficulty: "mediu", explanation: "|E∪F| = 24+18−10 = 32 ⇒ 40−32 = 8.", tip: "Formula |A∪B| = |A|+|B|−|A∩B|." },
+  /* 13 */ { question: "Valoarea 5! / (3!·2!) este:", options: ["5", "6", "10", "20", "60"], correct: 2, difficulty: "mediu", explanation: "120 / (6·2) = 10.", tip: "Recunoaște coeficienții binomiali." },
+  /* 14 */ { question: "Aria unui cerc cu diametrul 14 cm este:", options: ["49π", "98π", "154π", "196π", "7π"], correct: 0, difficulty: "mediu", explanation: "r = 7 ⇒ π·7² = 49π.", tip: "Diametrul / 2 = raza." },
+  /* 15 */ { question: "Pentru aₙ = 3n² − n, calculați a₄.", options: ["36", "44", "45", "46", "48"], correct: 1, difficulty: "mediu", explanation: "a₄ = 3·16 − 4 = 44.", tip: "Înlocuiește n cu 4." },
+  /* 16 */ { question: "A doua derivată a funcției f(x) = x³ este:", options: ["6x", "3x²", "3", "6", "x"], correct: 0, difficulty: "greu", explanation: "f′(x)=3x², f″(x)=6x.", tip: "Derivează de două ori succesiv." },
+  /* 17 */ { question: "log₂ 32 este egal cu:", options: ["4", "5", "6", "8", "10"], correct: 1, difficulty: "greu", explanation: "2⁵ = 32 ⇒ log₂32 = 5.", tip: "Transformă logaritmul în exponent." },
+  /* 18 */ { question: "O investiție se dublează în 6 ani (dobândă compusă). Rata anuală aproximativă este:", options: ["10 %", "11 %", "12 %", "13 %", "14 %"], correct: 2, difficulty: "greu", explanation: "Regula 72: 72/6 ≈ 12 %.", tip: "Ani × rată ≈ 72." },
+  /* 19 */ { question: "Soluția inecuației 2x² − 3x − 5 < 0 este:", options: ["x < −1 sau x > 2,5", "−1 < x < 2,5", "x < −2 sau x > 1", "x > 0", "x < 0"], correct: 1, difficulty: "greu", explanation: "Rădăcini: −1 și 2,5; parabolă cu a>0 ⇒ interiorul intervalului.", tip: "Parabola < 0 între rădăcini." },
+  /* 20 */ { question: "Un salariu de 1500 lei crește anual cu 8 %. Aproximativ, cât va fi după 3 ani?", options: ["1760 lei", "1830 lei", "1897 lei", "1900 lei", "2020 lei"], correct: 2, difficulty: "greu", explanation: "1500·1,08³ ≈ 1500·1,259 ≈ 1897 lei.", tip: "Folosește formula P(1+r)ⁿ." },
+  /* 21 - Ceas 1 */ { question: "La ora 4:40, care este unghiul (cel mai mic) dintre acul orar și cel minutar?", options: ["90°", "100°", "110°", "120°", "130°"], correct: 1, difficulty: "mediu", explanation: "Minutarul e la 40 min = 40*6°=240°. Orarul e la 4 ore și 40 min = 4*30° + 40*0.5° = 120°+20°=140°. Diferența: |240 - 140| = 100°.", tip: "Formulă rapidă: |30*H - 5.5*M|. Pentru 4:40: |30*4 - 5.5*40| = |120 - 220| = |-100| = 100°." },
+  /* 22 - Ceas 2 */ { question: "De câte ori între ora 13:00 și 19:00 acele ceasului formează un unghi drept (90°)?", options: ["6", "10", "11", "12", "14"], correct: 2, difficulty: "greu", explanation: "Acele formează un unghi drept de aproximativ două ori pe oră. Într-un interval de 6 ore (de la 13 la 19), acest lucru se întâmplă de 11 ori (există o suprapunere în jurul orei 15-16).", tip: "Reține că sunt 22 de unghiuri drepte în 12 ore și 44 în 24 de ore." }
+],
 
   };
 
@@ -2771,6 +2595,18 @@ constraints: {
             spatial: { title: "🧩 Strategii pentru Gândire Spațială", tips: [ { title: "🔄 Catalog de transformări", content: "1. Rotații: 90°, 180°, 270°. 2. Reflexii: orizontală, verticală. 3. Translații: deplasare pozițională.", example: "Cercul se mută în sens orar: stânga-sus → dreapta-sus → dreapta-jos → stânga-jos" } ] },
             math: { title: "🧮 Strategii pentru Matematică", tips: [ { title: "📊 Probleme cu mulțimi", content: "Pentru minim: suma - 100%. Pentru maxim: minimul dintre valori.", example: "75% + 60% - 100% = 35% minim pentru intersecție" } ] }
           };
+          const relevanceTips = {
+  sequences: "În admiterea 2023, 8 din 40 de întrebări (20% din examen!) au fost șiruri. Stăpânirea lor este esențială pentru un punctaj mare.",
+  analogies: "Analogile testează flexibilitatea gândirii. În 2023, au fost 6 astfel de probleme. Sunt puncte relativ ușor de câștigat dacă exersezi pattern-urile de relații.",
+  coding: "Codarea artificială, deși pare complexă, urmează reguli simple. Au fost 4 probleme în 2023, iar stăpânirea lor te poate diferenția de alți candidați.",
+  logic: "Silogismele și deducțiile logice sunt coloana vertebrală a testului. 6 probleme în 2023. Diagramele Venn te pot ajuta să vizualizezi și să rezolvi rapid.",
+  graphs: "Problemele de grafuri (drumul cel mai scurt) au apărut constant, chiar dacă în număr mic (3 în 2023). Sunt puncte sigure dacă aplici algoritmii corect.",
+  constraints: "În 2023, problema cu 'șapte bucătari' (întrebările 12-16) a fost exact de acest tip și a valorat 5 puncte! Abilitatea de a jongla cu reguli multiple sub presiune este o competență cheie.",
+  visualGrids: "Careurile testează atenția la detalii și gândirea structurată. Au fost 3 probleme în 2023. Verificarea pe rânduri, coloane și diagonale este metoda sigură.",
+  visualAnalogies: "Acestea sunt printre cele mai dificile, testând inteligența fluidă. Au fost 3 probleme în 2023. Descompunerea transformării (rotație, umplere, adăugare) este secretul.",
+  spatial: "Gândirea spațială, inclusiv desfășurări de cuburi, a fost prezentă cu 2 probleme în 2023. Abilitatea de a roti și plia mental obiecte este crucială.",
+  math: "O singură problemă de matematică de bază în 2023, dar este un punct garantat dacă stăpânești procente și probabilități simple."
+};
 
           const mentalToolkits = [
             { title: "🧠 Mindset-ul Câștigător", tools: [ "🎯 'Sunt pregătită să rezolv orice problemă!' - Teodora, ai antrenat pentru asta!", "⏰ 2 minute per problemă = ritm rapid dar controlat", "🔥 Prima intuiție e adesea corectă dacă ai lucrat metodic", "💪 Elimină 2-3 variante evident greșite, apoi alege inteligent", "🎪 Dacă te blochezi 30 secunde, treci la următoarea!" ] },
@@ -2899,40 +2735,55 @@ constraints: {
             );
           };
 
-          const renderProblemTypeCard = (type) => (
-            <div key={type.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <span className="text-4xl">{type.icon}</span>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800">{type.title}</h3>
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                      type.difficulty === 'Ușor' ? 'bg-green-100 text-green-800' :
-                      type.difficulty === 'Mediu' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {type.difficulty}
-                    </span>
-                  </div>
+          const renderProblemTypeCard = (type) => {
+    const answeredCount = Object.keys(userAnswers).filter(key => key.startsWith(type.id + '-')).length;
+    const totalCount = newExercises[type.id]?.length || 0;
+    const progress = totalCount > 0 ? (answeredCount / totalCount) * 100 : 0;
+
+    return (
+        <div key={type.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500 flex flex-col justify-between">
+            <div>
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                        <span className="text-4xl">{type.icon}</span>
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-800">{type.title}</h3>
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                                type.difficulty === 'Ușor' ? 'bg-green-100 text-green-800' :
+                                type.difficulty === 'Mediu' ? 'bg-yellow-100 text-yellow-800' :
+                                type.difficulty === 'Greu' ? 'bg-red-100 text-red-800' :
+                                'bg-purple-100 text-purple-800' // Culoare pentru 'Examen'
+                            }`}>
+                                {type.difficulty}
+                            </span>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => setActiveSection(type.id)}
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 flex items-center space-x-2 shadow-md"
+                    >
+                        <span>Învață</span>
+                        <ChevronRight />
+                    </button>
                 </div>
-                <button
-                  onClick={() => setActiveSection(type.id)}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 flex items-center space-x-2 shadow-md"
-                >
-                  <span>Învață</span>
-                  <ChevronRight />
-                </button>
-              </div>
-              <p className="text-gray-600 mb-4">{type.description}</p>
-              <div className="space-y-2">
-                <h4 className="font-semibold text-gray-700">Exerciții disponibile: {newExercises[type.id]?.length || 0}</h4>
-                <div className="bg-gray-50 p-3 rounded text-sm">
-                  <span className="font-medium">Exemplu: </span>
-                  {type.examples[0]}
+                <p className="text-gray-600 mb-4">{type.description}</p>
+                <div className="bg-gray-50 p-3 rounded text-sm mb-4">
+                    <span className="font-medium">Exemplu: </span>
+                    {type.examples[0]}
                 </div>
-              </div>
             </div>
-          );
+            <div className="mt-auto">
+                <div className="flex justify-between items-center text-sm text-gray-600 mb-1">
+                    <span>Progres</span>
+                    <span>{answeredCount} / {totalCount}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div className="bg-gradient-to-r from-green-400 to-blue-500 h-2.5 rounded-full" style={{ width: `${progress}%` }}></div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
           const renderStrategies = (sectionId) => {
             const strategy = strategies[sectionId];
@@ -2946,13 +2797,28 @@ constraints: {
             return (
               <div className="space-y-8">
                 <div className="text-center">
-                  <h2 className="text-3xl font-bold text-gray-800 flex items-center justify-center space-x-3 mb-4">
-                    <Lightbulb />
-                    <span>{strategy.title}</span>
-                  </h2>
-                  <p className="text-gray-600 max-w-2xl mx-auto">
-                    Masterizează această categorie cu strategii dovedite și exerciții practice!
-                  </p>
+                 <div className="text-center">
+    <h2 className="text-3xl font-bold text-gray-800 flex items-center justify-center space-x-3 mb-1">
+        <Lightbulb />
+        <span>{strategy.title}</span>
+        <Lightbulb />
+    </h2>
+    <button 
+        onClick={() => setInfoVisible(infoVisible === sectionId ? null : sectionId)}
+        className="text-sm text-blue-600 hover:underline mb-4"
+    >
+        De ce este relevantă această secțiune?
+    </button>
+    {infoVisible === sectionId && (
+        <div className="max-w-lg mx-auto bg-blue-50 p-4 rounded-lg shadow-lg border border-blue-200 mb-4">
+            <h4 className="font-bold text-blue-800 mb-2">🎯 Importanța la Examen</h4>
+            <p className="text-sm text-gray-700">{relevanceTips[sectionId]}</p>
+        </div>
+    )}
+    <p className="text-gray-600 max-w-2xl mx-auto">
+        Stăpânește această categorie cu strategii dovedite și exerciții practice!
+    </p>
+</div>
                 </div>
                 
                 <div className="grid gap-6">
@@ -3028,6 +2894,124 @@ constraints: {
               </div>
             );
           };
+          const renderMistakesReview = () => {
+    const incorrectAnswers = Object.entries(userAnswers).map(([key, userAnswer]) => {
+        const [sectionId, exerciseIndexStr] = key.split('-');
+        const exerciseIndex = parseInt(exerciseIndexStr, 10);
+        const exercise = newExercises[sectionId]?.[exerciseIndex];
+
+        if (exercise && userAnswer !== exercise.correct) {
+            return { exercise, sectionId, exerciseIndex }; // Am adăugat și indexul
+        }
+        return null;
+    }).filter(Boolean);
+
+    if (incorrectAnswers.length === 0) {
+        return (
+            <div className="text-center bg-white p-12 rounded-lg shadow-lg">
+                <span className="text-6xl mb-4 block">🎉</span>
+                <h2 className="text-3xl font-bold text-green-600">Felicitări, Teodora!</h2>
+                <p className="text-gray-600 mt-2 text-lg">Nu ai nicio greșeală de revizuit momentan. Continuă tot așa! Ești pe drumul cel bun! 💪</p>
+            </div>
+        );
+    }
+
+    // Aici modificăm renderExercise pentru a funcționa corect în modul revizuire
+    const renderMistakeExercise = (exercise, sectionId, originalIndex) => {
+      // Pentru revizuire, cheia trebuie să fie cea originală
+      const key = `${sectionId}-${originalIndex}`;
+      const userAnswer = userAnswers[key];
+      const isCorrect = exercise.correct === userAnswer; // Aici va fi mereu fals, dar păstrăm logica
+
+      return (
+          <div key={key} className="bg-white rounded-lg shadow-md p-6 mb-6 border-l-4 border-red-500">
+            <div className="flex items-center justify-between mb-4">
+              <span className={`px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800`}>
+                Greșeală de revizuit
+              </span>
+              <span className="text-gray-500 text-sm capitalize">{sectionId.replace(/([A-Z])/g, ' $1').trim()}</span>
+            </div>
+            
+            <h4 className="font-semibold text-gray-800 mb-4 text-lg">{exercise.question}</h4>
+            
+            <div className="space-y-3 mb-4">
+              {exercise.options.map((option, optIndex) => {
+                const isSelected = userAnswer === optIndex;
+                const isTheCorrectAnswer = optIndex === exercise.correct;
+                
+                return (
+                  <div
+                    key={optIndex}
+                    className={`w-full text-left p-4 rounded-lg border-2 ${
+                      isSelected ? 'bg-red-100 border-red-500 text-red-800' : 
+                      isTheCorrectAnswer ? 'bg-green-100 border-green-500 text-green-800' : 
+                      'bg-gray-50 border-gray-200'
+                    }`}
+                  >
+                    <span className="font-semibold mr-3">{String.fromCharCode(65 + optIndex)}.</span>
+                    {option}
+                    {isSelected && <span className="float-right font-bold">Răspunsul tău ✗</span>}
+                    {isTheCorrectAnswer && <span className="float-right font-bold">Corect ✓</span>}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 space-y-4">
+                <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+                    <h5 className="font-semibold text-blue-800 mb-2 flex items-center"><Lightbulb /> <span className="ml-2">Explicație:</span></h5>
+                    <p className="text-blue-700">{exercise.explanation}</p>
+                </div>
+                {exercise.tip && (
+                    <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+                        <h5 className="font-semibold text-yellow-800 mb-2 flex items-center"><Star /> <span className="ml-2">Tip pentru viitor:</span></h5>
+                        <p className="text-yellow-700">{exercise.tip}</p>
+                    </div>
+                )}
+            </div>
+          </div>
+      );
+    };
+
+    return (
+        <div className="space-y-8">
+            <div className="text-center">
+                <h2 className="text-3xl font-bold text-gray-800">🧠 Revizuirea Greșelilor</h2>
+                <p className="text-gray-600 mt-2">Aici poți revedea exercițiile la care ai greșit. Fiecare greșeală este o oportunitate de a învăța!</p>
+            </div>
+            <div className="space-y-6">
+                {incorrectAnswers.map(({ exercise, sectionId, exerciseIndex }) => 
+                    renderMistakeExercise(exercise, sectionId, exerciseIndex)
+                )}
+            </div>
+        </div>
+    );
+};
+const totalExercises = Object.values(newExercises).reduce((sum, exercises) => sum + (exercises ? exercises.length : 0), 0);
+const answeredExercises = Object.keys(userAnswers).length;
+
+// Verificarea dacă toate exercițiile au fost completate
+if (answeredExercises >= totalExercises && totalExercises > 0) {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-100 via-green-100 to-blue-200 p-8">
+            <div className="text-center bg-white p-12 rounded-2xl shadow-2xl max-w-3xl transform transition-all hover:scale-105 duration-500">
+                <span className="text-7xl mb-6 block animate-bounce">🏆</span>
+                <h1 className="text-4xl font-bold text-purple-700 mb-4">Felicitări, Teodora!</h1>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-6">Ai terminat! Ai rezolvat fiecare exercițiu din această aplicație.</h2>
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                    Acesta nu este doar un final de aplicație, este dovada muncii, ambiției și inteligenței tale.
+                    Fiecare răspuns corect a fost un pas înainte. Fiecare greșeală a fost o lecție neprețuită.
+                    Ești mai mult decât pregătită. Ești formidabilă.
+                </p>
+                <div className="bg-purple-600 text-white p-6 rounded-lg shadow-inner">
+                    <p className="text-xl font-bold">Acum închide aplicația, respiră adânc și ai încredere în tine.</p>
+                    <p className="mt-2">Examenul de admitere este doar o formalitate. Locul tău la Psihologie te așteaptă.</p>
+                    <p className="mt-6 text-2xl font-serif italic">Cu toată dragostea și admirația, M.</p>
+                </div>
+            </div>
+        </div>
+    );
+}
 
           return (
             <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
@@ -3080,23 +3064,30 @@ constraints: {
                       <BookOpen />
                       <span>Prezentare Generală</span>
                     </button>
-                    {problemTypes.map(type => (
-                      <button
-                        key={type.id}
-                        onClick={() => setActiveSection(type.id)}
-                        className={`px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
-                          activeSection === type.id 
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transform scale-105' 
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
-                        }`}
-                      >
-                        <span className="text-lg">{type.icon}</span>
-                        <span className="font-medium">{type.title}</span>
-                        <span className="bg-white bg-opacity-30 px-2 py-1 rounded-full text-xs">
-                          {newExercises[type.id]?.length || 0}
-                        </span>
-                      </button>
-                    ))}
+                   {problemTypes.map(type => {
+                      const totalCount = newExercises[type.id]?.length || 0;
+                      const answeredCount = Object.keys(userAnswers).filter(key => key.startsWith(type.id + '-')).length;
+                      const isComplete = totalCount > 0 && answeredCount >= totalCount;
+
+                      return (
+                        <button
+                          key={type.id}
+                          onClick={() => setActiveSection(type.id)}
+                          className={`px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
+                            activeSection === type.id 
+                              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transform scale-105' 
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+                          }`}
+                        >
+                          {isComplete && <Star />}
+                          <span className="text-lg">{type.icon}</span>
+                          <span className="font-medium">{type.title}</span>
+                          <span className={`px-2 py-1 rounded-full text-xs ${isComplete ? 'bg-green-400 text-white' : 'bg-white bg-opacity-30'}`}>
+                            {newExercises[type.id]?.length || 0}
+                          </span>
+                        </button>
+                      );
+                    })}
                     <button
                       onClick={() => setActiveSection('toolkits')}
                       className={`px-6 py-3 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
@@ -3108,6 +3099,17 @@ constraints: {
                       <Brain />
                       <span>Mental Toolkits</span>
                     </button>
+                    <button
+  onClick={() => setActiveSection('mistakesReview')}
+  className={`px-6 py-3 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
+    activeSection === 'mistakesReview' 
+      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg' 
+      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+  }`}
+>
+  <RotateCcw />
+  <span>Revizuire Greșeli</span>
+</button>
 <button
   onClick={() => setActiveSection('examMode')}
   className={`px-6 py-3 rounded-lg transition-all duration-200 flex items-center space-x-2 ${
@@ -3212,6 +3214,7 @@ constraints: {
                       </div>
                     </div>
                   )}
+                  {activeSection === 'mistakesReview' && renderMistakesReview()}
 
                   {problemTypes.map(type => 
                     activeSection === type.id && renderStrategies(type.id)

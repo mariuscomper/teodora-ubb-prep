@@ -379,7 +379,7 @@ const resetSectionAnswers = (sectionId) => {
               /* 15 */ { question: "Urmează: 16, 23, 31, 40, ?", options: ["48", "49", "50", "51", "52"], correct: 2, difficulty: "mediu", explanation: "Diferențele cresc cu 1: +7, +8, +9 ⇒ +10 → 50.", tip: "Dacă diferențele nu sunt egale, studiază evoluția lor – poate fi o a doua progresie." },
               /* 16 */ { question: "Șirul: 1A, 2C, 4F, 7J, ?", options: ["11N", "11O", "12O", "12P", "13O"], correct: 1, difficulty: "mediu", explanation: "Numere: +1, +2, +3, +4 ⇒ 7 + 4 = 11.  Litere: +2, +3, +4, +5 ⇒ J → O.", tip: "Separă numeric de alfabetic și caută două reguli paralele." },
               /* 17 */ { question: "Completează: 28, 25, 20, 13, ?", options: ["5", "6", "4", "7", "8"], correct: 2, difficulty: "mediu", explanation: "Se scad numere impare consecutive: −3, −5, −7, −9. 13 − 9 = 4.", tip: "Seriile de diferențe impare consecutive apar frecvent – memorează-le!" },
-              /* 18 */ { question: "1357, 7135, 5713, ?", options: ["3571", "7135", "1357", "5713", "7351"], correct: 0, difficulty: "greu", explanation: "Fiecare termen rotește cifrele spre stânga cu două poziții: 1357 → 7135 → 5713 → 3571.", tip: "Compară poziția cifrelor — rotațiile ciclice sunt un truc des folosit." },
+              /* 18 */ { question: "1357, 7135, 5713, ?", options: ["3571", "7135", "1357", "5713", "7351"], correct: 0, difficulty: "greu", explanation: "Regula este: ultima cifră a unui termen devine prima cifră a următorului termen, iar celelalte cifre se deplasează o poziție spre dreapta. Exemplu: în '1357', ultima cifră '7' trece în față, formând '7135'. Apoi, în '7135', ultima cifră '5' trece în față, formând '5713'. Următorul pas: din '5713', '3' trece în față, rezultând '3571'.", tip: "Urmărește mișcarea unei singure cifre (prima sau ultima) de-a lungul șirului pentru a identifica pattern-uri de permutare." },
               /* 19 */ { question: "Care urmează: 2, 4, 9, 19, 40, ?", options: ["81", "82", "83", "84", "86"], correct: 1, difficulty: "greu", explanation: "Diferențe: 2, 5, 10, 21.  Se dublează, apoi alternativ se adaugă +1: 2×2 + 1 = 5, 5×2 = 10, 10×2 + 1 = 21, 21×2 = 42. 40 + 42 = 82.", tip: "Când șirul diferențelor nu e constant, vezi dacă el însuși are un pattern de multiplicare." },
               /* 20 */ { question: "Completați: 1, 8, 4, 27, 9, 64, 16, ?", options: ["25", "100", "81", "125", "32"], correct: 3, difficulty: "greu", explanation: "Termenii pe poziții impare sunt pătratele succesive: 1², 2², 3², 4².  Termenii pe poziții pare sunt cuburile succesive: 2³, 3³, 4³, 5³.  Următorul (poziție pară) este 5³ = 125.", tip: "Verifică dacă există două șiruri intercalate (impar/​par) – truc clasic de examen." }
             ],
@@ -1717,14 +1717,14 @@ visualAnalogies: [
   },
 
   /* 2 */
-  {
+ {
     question: "│ devine ─, ╱ devine ╲. Prin aceeași regulă, ← devine?",
     options: ["→", "↑", "↓", "↖", "↘"],
-    correct: 2,
+    correct: 1, // Corect este ↑, la indexul 1
     difficulty: "mediu",
-    explanation: "Regula: rotație 90° în sens orar. ← rotit 90° = ↓",
+    explanation: "Regula este rotația cu 90° în sens orar (clockwise). O săgeată spre stânga (←) rotită cu 90° în sens orar devine o săgeată în sus (↑).",
     tip: "Testează rotații în ambele sensuri (orar/antiorar)."
-  },
+},
 
   /* 3 */
   {
@@ -2171,13 +2171,13 @@ spatial: [
 
   /* 10 */
   {
-    question: "Într-un cub: 3 e opus lui 6; 2 este la dreapta lui 3; 1 deasupra lui 2. Care față este opusă lui 1?",
+    question: "Pe un cub: 3 e opus lui 6; 2 este la dreapta lui 3, iar fața din stânga este 4. Dacă fața 1 este deasupra lui 2, ce față este opusă lui 1?",
     options: ["4", "5", "6", "2", "3"],
-    correct: 1,
+    correct: 1, // Raspunsul este 5
     difficulty: "mediu",
-    explanation: "Desfăşurarea cubului arată că faţa opusă lui 1 este 5.",
-    tip: "Desenează net-ul cubului."
-  },
+    explanation: "Plasăm fețele: 3 (față) -> 6 (spate). 4 (stânga) -> 2 (dreapta). '1 deasupra lui 2' înseamnă că 1 este fața de sus. Prin eliminare, singura față rămasă (jos) este 5. Fața opusă lui 1 (sus) este 5 (jos).",
+    tip: "Desenează o desfășurare de cub (un net) și completează fețele pe baza regulilor pentru a vizualiza opusele."
+},
 
   /* 11 */
   {

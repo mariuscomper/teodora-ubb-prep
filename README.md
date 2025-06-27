@@ -1,92 +1,60 @@
-# 🎓 Aplicația de Pregătire pentru Admiterea la Psihologie UBB
-
-**Dedicată cu drag Teodorei** ✨
-
-## 📋 Despre Proiect
-
-Această aplicație interactivă a fost creată special pentru pregătirea admiterii la Facultatea de Psihologie și Științele Educației, UBB Cluj-Napoca. Conține sute de exerciții noi, strategii dovedite și simulări complete de examen.
-
-## 🌟 Funcționalități Principale
-
-### 📚 10 Categorii de Exerciții
-- **🔢 Șiruri și Progresii** - 20 exerciții cu explicații detaliate
-- **🔗 Analogii și Relații** - 20 exerciții de logică verbală
-- **🔐 Codare Artificială** - 20 exerciții de decodificare
-- **🗺️ Probleme de Grafuri** - Optimizare și circuite
-- **⚖️ Logică Formală** - Silogisme și deducții
-- **🎯 Probleme cu Constrângeri** - Aranjamente complexe
-- **⬛ Careuri Figurale** - Pattern-uri vizuale
-- **🔄 Analogii Vizuale** - Transformări geometrice
-- **🧩 Gândire Spațială** - Rotații și reflexii
-- **🧮 Matematică** - Probabilități și calcule rapide
-
-### 💡 Strategii și Tips
-- **Algoritmi de rezolvare rapidă** pentru fiecare tip de problemă
-- **Mental Toolkits** pentru gestionarea stresului de examen
-- **Tehnici de eliminare** a răspunsurilor incorecte
-- **Strategii de timing** pentru 90 de minute de examen
-
-### 📝 Simulare Completă de Examen
-- **40 de întrebări** din toate categoriile
-- **Timer real de 90 de minute**
-- **Rezultate detaliate** cu analiză de performanță
-- **Distribuție realistă** a tipurilor de probleme
-
-## 🚀 Cum să Folosești Aplicația
-
-1. **Deschide** `teodora-admitere-ubb.html` în orice browser modern
-2. **Începe cu prezentarea generală** pentru a înțelege structura examenului
-3. **Studiază strategiile** pentru fiecare categorie de probleme
-4. **Exersează** cu exercițiile interactive (cu feedback instant)
-5. **Testează-te** cu simulările complete de examen
-6. **Repetă** până când te simți pregătită pentru examen
-
-## 📈 Progresul tău
-
-Aplicația îți urmărește:
-- **Streak-ul** de răspunsuri corecte consecutive
-- **Progresul** pe fiecare categorie
-- **Timpul** de rezolvare la simulări
-- **Punctajul** la examene practice
-
-## 🎯 Strategia de Pregătire Recomandată
-
-### Săptămâna 1-2: Fundamentele
-- Studiază toate strategiile
-- Rezolvă 5-10 exerciții per categorie
-- Focusează-te pe categoriile mai dificile
-
-### Săptămâna 3-4: Consolidarea
-- Repetă exercițiile greșite
-- Fă 2-3 simulări complete
-- Cronometrează-te pentru timing optim
-
-### Ultima săptămână: Finisarea
-- Revizuiește algoritmii rapizi
-- O simulare pe zi
-- Odihnește-te bine înainte de examen
-
-## 💝 Mesaj Special
-
-Dragă Teodora,
-
-Această aplicație a fost creată cu toată dragostea și pasiunea pentru succesul tău. Fiecare exercițiu, fiecare explicație, fiecare tip a fost gândit să te ajute să excelezi la admiterea ta.
-
-**Ai toate instrumentele necesare pentru succes!** 🌟
-
-Folosește aplicația zilnic, ai încredere în pregătirea ta și știu că vei reuși strălucit la UBB!
+# 🎓 Suita de Pregătire pentru Admiterea la Psihologie UBB
 
 ---
 
-*Cu drag și încredere în succesul tău,*
-*Echipa ta de pregătire* ❤️
+## 🌟 Despre Proiect
+
+Aceasta nu este doar o aplicație. Este o suită de antrenament personală, completă și interactivă, construită de la zero pentru a simula în detaliu experiența examenului de admitere la Facultatea de Psihologie și Științele Educației (UBB Cluj-Napoca). Fiecare element a fost gândit pentru a oferi claritate, încredere și o pregătire de excelență.
+
+## 🚀 De ce este Specială Această Aplicație?
+
+*   **🎯 Construită pe Structura Reală a Examenului:** Distribuția problemelor, tipologiile și nivelul de dificultate sunt calibrate pe baza subiectelor oficiale din 2022 și 2023.
+*   **🧠 Peste 200 de Exerciții Complet Noi:** Nicio problemă nu este preluată. Toate exercițiile au fost create special pentru această aplicație, fiecare având explicații detaliate și sfaturi strategice.
+*   **💡 Învățare Inteligentă:** Modul **Revizuirea Greșelilor** este piesa centrală. Aplicația salvează automat fiecare exercițiu la care ai greșit, permițându-ți să transformi orice ezitare într-o oportunitate de învățare.
+*   **⏰ Simulare Realistă:** Modul **Simulare Examen** recreează condițiile reale de testare – 40 de întrebări mixte, 90 de minute, cronometru și o analiză detaliată a performanței pe categorii la final.
+*   **❤️ Feedback Personalizat:** De la mesaje de relevanță care explică de ce fiecare categorie este importantă, la încurajări pentru a menține un "streak" de răspunsuri corecte, totul este conceput pentru a te motiva.
+*   **💾 Progresul Tău, Salvat Automat:** Toate răspunsurile și progresul pe secțiuni sunt salvate automat în browser (`localStorage`), pentru ca tu să poți relua pregătirea exact de unde ai rămas.
+
+## 🧰 Funcționalități Cheie
+
+| Icon | Categorie / Funcționalitate | Descriere |
+| :--: | :--- | :--- |
+| 🔢 | **Șiruri și Progresii** | Identificarea regulilor în șiruri de numere, litere sau mixte. |
+| 🔗 | **Analogii și Relații** | Găsirea relațiilor logice între concepte și aplicarea lor. |
+| 🔐 | **Codare Artificială** | Decodificarea regulilor de transformare a cuvintelor în cifre. |
+| 🗺️ | **Probleme de Grafuri** | Optimizarea rutelor, circuite și probleme de transport. |
+| ⚖️ | **Logică Formală** | Silogisme, deducții logice și validarea concluziilor. |
+| 🎯 | **Probleme cu Constrângeri** | Aranjamente, ordine și reguli complexe de poziționare. |
+| ⬛ | **Careuri Figurale** | Completarea pattern-urilor în matrice și careuri logice. |
+| 🔄 | **Analogii Vizuale** | Transformări figurale și relații vizuale complexe. |
+| 🧩 | **Gândire Spațială** | Rotații, reflexii și desfășurări de obiecte 3D. |
+| 🧮 | **Matematică Aplicată** | Procente, probabilități, probleme cu ceasuri și calcule rapide. |
+| --- | --- | --- |
+| 📝 | **Simulare Examen** | Test complet de 40 de întrebări în 90 de minute, cu analiză finală. |
+| 🔄 | **Revizuire Greșeli** | O secțiune dedicată unde poți revedea și înțelege fiecare greșeală. |
+| 🧠 | **Mental Toolkits** | Strategii psihologice și algoritmi de viteză pentru ziua examenului. |
+| ⚙️ | **Controale Interactive** | Filtre de dificultate, amestecarea și resetarea exercițiilor pe secțiune. |
+
+
+## 🛠️ Cum se Folosește
+
+1.  **Deschide** fișierul `teodora-admitere-ubb.html` în orice browser modern.
+2.  **Explorează** secțiunile din `Prezentare Generală` pentru a te familiariza cu structura.
+3.  **Alege** o categorie, studiază `Strategiile` și apoi rezolvă `Exercițiile Interactive`.
+4.  **Verifică** periodic secțiunea `Revizuire Greșeli` pentru a consolida cunoștințele.
+5.  **Testează-ți** cunoștințele în condiții reale folosind `Simulare Examen`.
+
+---
 
 ## 🔧 Detalii Tehnice
 
-- **Tehnologie**: HTML5, CSS3, JavaScript, React 18
-- **Compatibilitate**: Toate browserele moderne
-- **Responsive**: Funcționează pe desktop, tablet și mobil
-- **Offline**: Funcționează fără conexiune internet
+-   **Tehnologii:** HTML5, Tailwind CSS, JavaScript (ES6+), React 18, Babel (in-browser transpilation).
+-   **Arhitectură:** Aplicație single-file, fără dependențe externe (în afara CDN-urilor) și complet funcțională offline.
+-   **Compatibilitate:** Toate browserele moderne (Chrome, Firefox, Safari, Edge).
+-   **Responsive:** Design adaptabil pentru desktop, tabletă și mobil.
+
+---
+
 
 ## 📱 Link Direct
 

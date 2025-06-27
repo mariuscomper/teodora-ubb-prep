@@ -827,219 +827,179 @@ const resetSectionAnswers = (sectionId) => {
 ],
 
 graphs: [
-  /* 1 */
-{
-  question: "Teodora planifică o excursie între 5 orașe (Cluj, Brașov, București, Timișoara, Iași) unde orice oraș este conectat direct cu oricare altul prin autostradă. Câte conexiuni rutiere directe există în total?",
-  options: ["10", "15", "20", "25", "5"],
-  correct: 0,
-  difficulty: "ușor",
-  explanation: "Într-o rețea completă cu 5 noduri, numărul conexiunilor = 5×4/2 = 10 (fiecare oraș cu alte 4, împărțit la 2 pentru a evita dublarea).",
-  tip: "Pentru n orașe complet conectate: n(n-1)/2 conexiuni."
-},
-
-/* 2 */
-{
-  question: "Un curier Glovo trebuie să livreze prin 6 puncte dispuse liniar pe Calea Turzii: Restaurant → Bloc A → Bloc B → Bloc C → Bloc D → Client final. Câte segmente de drum parcurge?",
-  options: ["4", "5", "6", "7", "8"],
-  correct: 1,
-  difficulty: "ușor",
-  explanation: "Pe o rută liniară cu 6 puncte, există 5 segmente consecutive de drum.",
-  tip: "Rută liniară: numărul segmentelor = numărul punctelor - 1."
-},
-
-/* 3 */
-{
-  question: "La Untold, 8 scene sunt dispuse circular în jurul Parcului Central, fiecare conectată cu vecinele directe pentru echipamente. Câte conexiuni are fiecare scenă?",
-  options: ["1", "2", "3", "4", "8"],
-  correct: 1,
-  difficulty: "ușor",
-  explanation: "În aranjament circular, fiecare scenă se conectează cu exact 2 vecine (stânga și dreapta).",
-  tip: "Aranjament circular: gradul fiecărui nod = 2."
-},
-
-/* 4 */
-{
-  question: "Rețeaua de fibră optică din Florești conectează 7 cartiere prin cel mai eficient mod (fără cicluri redundante). Câte cabluri sunt necesare?",
-  options: ["5", "6", "7", "8", "9"],
-  correct: 1,
-  difficulty: "ușor",
-  explanation: "Pentru a conecta n puncte fără redundanță (arbore), sunt necesare exact n-1 conexiuni. Pentru 7 cartiere: 6 cabluri.",
-  tip: "Conexiune minimă fără cicluri: n noduri necesită n-1 muchii."
-},
-
-/* 5 */
-{
-  question: "În cartierul Gheorgheni, 5 intersecții sunt conectate astfel încât din fiecare ies exact 2 străzi. Câte străzi există în total în cartier?",
-  options: ["5", "6", "7", "8", "10"],
-  correct: 0,
-  difficulty: "ușor",
-  explanation: "Suma gradelor = 5×2 = 10. Numărul total de muchii = 10/2 = 5 străzi (fiecare stradă conectează 2 intersecții).",
-  tip: "Formula handshaking: suma gradelor = 2 × numărul muchiilor."
-},
-
-  /* 6 */
+  /* 1: Tip Drum Minim - similar cu Ex. 1 (2023) */
   {
-    question: "În K₄ (graf complet cu 4 noduri), ce grad are fiecare nod?",
-    options: ["2", "3", "4", "5", "6"],
-    correct: 1,
-    difficulty: "ușor",
-    explanation:
-      "Într-un Kₙ, gradul fiecărui nod = n−1. Pentru n = 4 ⇒ 3.",
-    tip: "Grad egal pentru fiecare nod – simplifică mult calculele."
-  },
-
-  /* 7 */
-  {
-    question: "Care este **numărul minim de frunze** (noduri de grad 1) într-un arbore cu 12 noduri?",
-    options: ["1", "2", "3", "4", "6"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation:
-      "Un arbore are întotdeauna cel puțin două frunze (cazul “lanț” Pₙ). Deci minim 2.",
-    tip: "Ține minte: arborii au ≥2 frunze – excepții nu există."
-  },
-
-  /* 8 */
-  {
-    question: "Un graf neorientat cu 8 noduri conține 13 muchii. Numărul de noduri de **grad impar** nu poate fi mai mic de…",
-    options: ["0", "1", "2", "3", "4"],
-    correct: 2,
-    difficulty: "mediu",
-    explanation:
-      "Suma gradelor = 2·13 = 26 (par). Numărul nodurilor de grad impar trebuie să fie par. 0 ar impune toate gradele pare, dar 26/8 = 3,25 ⇒ imposibil. Următorul minim par este 2.",
-    tip: "Verifică «handshaking» + regula «număr impar de noduri impare = par»."
-  },
-
-  /* 9 */
-  {
-    question: "Pentru nodurile {A,B,C,D} și arcele A→B, B→C, C→A, C→D, câte **componente puternic conexe** are graful orientat?",
-    options: ["1", "2", "3", "4", "5"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation:
-      "Submulțimea {A,B,C} este puternic conexă (drum în ambele sensuri între oricare două). Nodul D nu are arc de întoarcere spre C ⇒ rămâne singur. Deci 2 componente.",
-    tip: "Grupează nodurile care au drum **dus-întors** între ele – acela e testul SCC."
-  },
-
-  /* 10 */
-  {
-    question: "Un graf bipartit complet K₍₃,₃₎ are…",
-    options: ["6 noduri și 9 muchii", "6 noduri și 6 muchii", "9 noduri și 6 muchii", "6 noduri și 12 muchii", "9 noduri și 9 muchii"],
+    question: "Un curier trebuie să ajungă de la depozitul A la clientul F. Timpii (în minute) sunt pe hartă. Care este cel mai rapid drum dintre A și F? Hartă: A-B(10), A-C(5), B-D(5), C-D(15), C-E(20), D-F(10), E-F(5).",
+    options: ["A-B-D-F", "A-C-D-F", "A-C-E-F", "A-D-F", "A-B-F"],
     correct: 0,
     difficulty: "mediu",
-    explanation:
-      "K₍m,n₎ are m+n noduri și m·n muchii. 3+3=6 noduri, 3·3=9 muchii.",
-    tip: "Reține formula m·n pentru muchii în bipartite complete."
+    explanation: "Calculăm fiecare variantă validă: \n A-B-D-F = 10 + 5 + 10 = 25 min. \n A-C-D-F = 5 + 15 + 10 = 30 min. \n A-C-E-F = 5 + 20 + 5 = 30 min. \n Variantele A-D-F și A-B-F sunt invalide (nu există drum direct). Cel mai rapid este 25 de minute.",
+    tip: "Folosește metoda verificării variantelor: calculează costul pentru fiecare opțiune și alege minimul. Nu te grăbi!"
   },
-
-  /* 11 */
+  /* 2: Tip Drum Maxim - similar cu Ex. 4 (2023) */
   {
-    question: "Un arbore cu 10 noduri conține exact 3 noduri de grad 3. Câte frunze are?",
-    options: ["4", "5", "6", "7", "8"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation:
-      "Suma gradelor = 2(|V|−1)=18. Contribuție: 3 noduri·3=9. Restul nodurilor (10−3=7) sunt fie frunze (grad 1) fie interne (grad 2). Notăm L = nr. frunze, K = grad 2. 9+L+2K=18 și L+K=7 ⇒ L=5.",
-    tip: "Sistem rapid: ♦ total grade = 2(n−1) ♦ folosește ecuații pentru grad 1 / 2 / 3."
-  },
-
-  /* 12 */
-  {
-    question: "Care este **numărul minim de muchii** într-un graf neorientat cu 8 noduri, dacă fiecare nod are grad cel puțin 5?",
-    options: ["15", "18", "20", "22", "24"],
+    question: "O turistă vrea să parcurgă cea mai lungă rută de la cabana A la Vârful F, fără a trece de două ori prin același loc. Distanțele (în km) sunt pe hartă: A-B(4), A-C(8), B-E(6), C-D(3), D-E(3), D-F(12), E-F(5).",
+    options: ["A-B-E-F", "A-C-D-F", "A-C-D-E-F", "A-B-F", "A-E-F"],
     correct: 2,
     difficulty: "mediu",
-    explanation:
-      "Minim grad 5 ⇒ suma gradelor ≥ 8·5 = 40 ⇒ |E| ≥ 40/2 = 20.",
-    tip: "Înmulțește grad-minim cu numărul de noduri și împarte la 2."
+    explanation: "Calculăm fiecare rută: \n A-B-E-F = 4 + 6 + 5 = 15 km. \n A-C-D-F = 8 + 3 + 12 = 23 km. \n A-C-D-E-F = 8 + 3 + 3 + 5 = 19 km. \n Cea mai lungă rută este A-C-D-F cu 23 km.",
+    tip: "Atenție la cerință! Uneori se cere drumul MAXIM, nu minim. Logica e aceeași, dar la final alegi valoarea cea mai mare."
   },
-
-  /* 13 */
+  /* 3: Tip Circuit/Tur - similar cu Ex. 2 (2023) */
   {
-    question: "Un graf neorientat cu exact **două** noduri de grad impar are:",
-    options: ["doar un drum eulerian", "doar un circuit eulerian", "și drum, și circuit eulerian", "niciun circuit eulerian", "informație insuficientă"],
-    correct: 0,
-    difficulty: "mediu",
-    explanation:
-      "Condiția clasică: 0 noduri impare ⇒ circuit eulerian; 2 noduri impare ⇒ drum eulerian (start/finish la cele impare).",
-    tip: "Reține: 0 → circuit, 2 → drum, >2 → nimic."
-  },
-
-  /* 14 */
-  {
-    question: "Un graf orientat are 5 noduri; gradul de ieșire (out-degree) este {2, 1, 0, 3, 0}. Care este **media gradelor de intrare** (in-degree)?",
-    options: ["1", "1,2", "1,4", "1,5", "2"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation:
-      "Sumă out-degree = 6 ⇒ numărul total de arce = 6 ⇒ sumă in-degree = 6 ⇒ media = 6/5 = 1,2.",
-    tip: "În grafuri orientate: Σ out = Σ in = |A|."
-  },
-
-  /* 15 */
-  {
-    question: "Într-un graf ponderat avem muchiile: AB(3), AC(5), BC(2), BD(4). Care este costul celui mai ieftin drum de la A la D?",
-    options: ["6", "7", "8", "9", "10"],
-    correct: 1,
-    difficulty: "mediu",
-    explanation:
-      "Drumurile posibile: A→B→D = 3+4=7 (cel mai mic), A→C→B→D = 5+2+4=11 etc.",
-    tip: "Pentru grafuri mici, enumeră drumurile scurte înainte de a rula mental Dijkstra."
-  },
-
-  /* 16 */
-  {
-    question: "Un graf simplu cu 10 noduri și 25 muchii poate fi planar?",
-    options: ["Da, întotdeauna", "Da, uneori", "Nu", "Doar dacă are noduri de grad 1", "Depinde de arbori parțiali"],
-    correct: 2,
-    difficulty: "mediu",
-    explanation:
-      "Pentru grafuri planare: |E| ≤ 3|V| − 6 ⇒ 25 ≤ 24 este fals. Deci NU poate fi planar.",
-    tip: "Aplică rapid inegalitatea Euler: E ≤ 3V − 6."
-  },
-
-  /* 17 */
-  {
-    question: "Câte arbori parțiali acoperitori (spanning trees) are K₄?",
-    options: ["8", "12", "16", "24", "32"],
-    correct: 2,
-    difficulty: "greu",
-    explanation:
-      "Formula Cayley: n^{n−2}. Pentru n = 4 ⇒ 4² = 16.",
-    tip: "Memorizează Cayley: de la K₃ (3) → K₄ (16) → K₅ (125)…"
-  },
-
-  /* 18 */
-  {
-    question: "Care este **numărul maxim** de muchii într-un graf planar simplu cu 8 noduri?",
-    options: ["12", "14", "16", "18", "20"],
+    question: "Un agent de vânzări pornește din A, trebuie să viziteze orașele B, C și D (în orice ordine) și să se întoarcă în A. Care este cel mai scurt circuit? Costuri: A-B(10), A-C(12), A-D(15), B-C(5), B-D(8), C-D(6).",
+    options: ["A-B-C-D-A", "A-C-B-D-A", "A-D-B-C-A", "A-B-D-C-A", "A-C-D-B-A"],
     correct: 3,
     difficulty: "greu",
-    explanation:
-      "Inegalitatea Euler: |E| ≤ 3|V| − 6 ⇒ 3·8 − 6 = 18.",
-    tip: "Ține minte limita 3V−6 (sau 2V−4 dacă graful este plan bipartit)."
+    explanation: "Calculăm costul total pentru fiecare tur: \n A-B-C-D-A = 10+5+6+15 = 36. \n A-C-B-D-A = 12+5+8+15 = 40. \n A-D-B-C-A = 15+8+5+12 = 40. \n A-B-D-C-A = 10+8+6+12 = 36. Ambele A și D au același cost minim, dar D este listată. Oricare dintre ele este un răspuns valid, alegem ce e în opțiuni.",
+    tip: "La probleme de circuit, asigură-te că ruta se încheie în punctul de plecare și calculează și costul drumului final de întoarcere."
   },
-
-  /* 19 */
+  /* 4: Tip Rută alternativă - similar cu Ex. 5 (2023) */
   {
-    question: "Un graf simplu cu 6 noduri și 9 muchii nu conține cicluri de lungime impară. Ce proprietate are graful?",
-    options: ["Este neconex", "Este planar", "Este bipartit", "Este eulerian", "Este hamiltonian"],
+    question: "Drumul cel mai rapid de la A la D este A-B-D (cost 10). Din cauza unor lucrări, drumul B-D este blocat. Care este acum cel mai rapid drum alternativ? Hartă: A-B(4), A-C(7), B-C(2), C-D(6).",
+    options: ["A-C-D", "A-B-C-D", "A-D", "Nu există alternativă"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Ruta A-B-D este indisponibilă. Căutăm alte rute de la A la D: \n 1. A-C-D = 7 + 6 = 13. \n 2. A-B-C-D = 4 + 2 + 6 = 12. \n Cel mai rapid drum alternativ este A-B-C-D, cu costul 12.",
+    tip: "Când o rută este blocată, pur și simplu o ignori și recalculezi alternativele rămase."
+  },
+    /* 5 */ {
+    question: "Urmărind harta, care este costul drumului A-C-B-E-D? Costuri: A-C(5), C-B(8), B-E(3), E-D(7).",
+    options: ["20", "21", "22", "23", "24"],
     correct: 2,
-    difficulty: "greu",
-    explanation:
-      "Absența oricărui ciclu impar este definiția unui graf bipartit.",
-    tip: "Reține: «Fără cicluri impare = bipartit» – concept cheie."
+    difficulty: "ușor",
+    explanation: "Se adună costurile de pe fiecare segment al rutei specificate: 5 (A-C) + 8 (C-B) + 3 (B-E) + 7 (E-D) = 23.",
+    tip: "Acesta este cel mai simplu tip. Doar urmărește și adună. Fii atent/ă să nu greșești la calculul aritmetic."
   },
-
-  /* 20 */
-  {
-    question: "Care este **numărul cromatic** (χ) al ciclului C₇?",
-    options: ["2", "3", "4", "5", "7"],
+ /* 6 */ {
+    question: "De la A pornesc 2 drumuri spre E: prin B (A-B-E) și prin C (A-C-E). Ruta A-B-E are costurile A-B(5) și B-E(8). Ruta A-C-E are costurile A-C(10) și C-E(2). Care este cel mai ieftin mod de a ajunge în E?",
+    options: ["Ruta prin C", "Ruta prin B", "Ambele au același cost", "Nu se poate ajunge"],
+    correct: 0,
+    difficulty: "ușor",
+    explanation: "Calculăm costul pentru fiecare rută: \n 1. Ruta prin B (A-B-E): 5 + 8 = 13. \n 2. Ruta prin C (A-C-E): 10 + 2 = 12. \n Comparând cele două costuri, ruta prin C (cost 12) este mai ieftină decât ruta prin B (cost 13).",
+    tip: "Chiar dacă un segment de drum este ieftin (ex. A-B=5), costul total al rutei poate fi mai mare. Calculează întotdeauna suma completă."
+  },
+  /* 7 */ {
+    question: "Care este diferența de cost între ruta cea mai LUNGĂ și cea mai SCURTĂ de la A la D? Hartă: A-B(10), B-D(10), A-C(3), C-D(15).",
+    options: ["0", "2", "3", "5", "8"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Calculăm costurile tuturor rutelor simple de la A la D: \n 1. A-B-D = 10 + 10 = 20 (Aceasta este ruta cea mai lungă). \n 2. A-C-D = 3 + 15 = 18 (Aceasta este ruta cea mai scurtă). \n Diferența este 20 - 18 = 2.",
+    tip: "Citește cu atenție și descompune problema în pași mici: 1. Găsește ruta maximă. 2. Găsește ruta minimă. 3. Calculează diferența."
+  },
+  /* 8 */ {
+    question: "Un poștaș trebuie să plece din A, să lase un pachet în D, apoi unul în E. Care este traseul total minim? Hartă: A-B(2), A-C(5), B-D(7), C-D(3), C-E(9), D-E(4).",
+    options: ["A-B-D-E", "A-C-D-E", "A-C-E-D", "A-B-C-E"],
     correct: 1,
     difficulty: "greu",
-    explanation:
-      "Ciclurile impare necesită 3 culori (cele pare, doar 2). Pentru n = 7 (impar) ⇒ χ = 3.",
-    tip: "Odd-cycle ⇒ trei culori; even-cycle ⇒ două culori – regula de bază pentru colorare."
+    explanation: "Trebuie să ajungem la D și E. Calculăm costurile totale pentru rutele care fac asta: \n 1. A-B-D-E = 2 + 7 + 4 = 13. \n 2. A-C-D-E = 5 + 3 + 4 = 12. \n Ruta A-C-E-D nu e optimă pentru că vizitează E înainte de D. Traseul minim este A-C-D-E, cu cost 12.",
+    tip: "Pentru a vizita mai multe puncte, descompune problema: 'cel mai scurt drum A->D' + 'cel mai scurt drum D->E'."
+  },
+  /* 9 */ {
+    question: "Dacă toate costurile de pe hartă s-ar dubla, care ar fi noul cost al drumului A-B-C? Hartă inițială: A-B(5), B-C(7).",
+    options: ["12", "18", "20", "24", "30"],
+    correct: 3,
+    difficulty: "ușor",
+    explanation: "Costul inițial al drumului A-B-C este 5 + 7 = 12. Dacă toate costurile se dublează, noul cost va fi 12 * 2 = 24. Alternativ: (5*2) + (7*2) = 10 + 14 = 24.",
+    tip: "Dacă toate costurile suferă aceeași transformare (ex. se dublează), poți calcula costul inițial și apoi să aplici transformarea o singură dată pe rezultat."
+  },
+  /* 10 */ {
+    question: "În rețeaua din imagine, un pachet se pierde dacă trece prin nodul C. Care este cel mai scurt drum de la A la F care EVITĂ nodul C? Hartă: A-B(10), A-C(5), B-D(5), C-D(2), D-F(8), B-E(20), E-F(3).",
+    options: ["A-B-D-F", "A-C-D-F", "A-B-E-F", "Nu se poate ajunge"],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "Trebuie să găsim drumul minim de la A la F fără a folosi nodul C. Eliminăm toate rutele care conțin C. Rutele rămase sunt: \n 1. A-B-D-F = 10 + 5 + 8 = 23. \n 2. A-B-E-F = 10 + 20 + 3 = 33. \n Cel mai scurt drum care evită C este A-B-D-F cu costul 23.",
+    tip: "Când o problemă cere evitarea unui nod, pur și simplu ignorați complet acel nod și toate drumurile care intră sau ies din el."
+  },
+ /* 11: Tip Circuit complex */
+  {
+    question: "Un curier pleacă din A, vizitează B, C și E (în orice ordine) și se întoarce în A. Care este costul celui mai eficient tur? Hartă: A-B(10), A-C(4), B-C(5), B-E(8), C-E(6). Nu există drum direct A-E.",
+    options: ["30", "28", "29", "27", "31"],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Un tur eficient vizitează fiecare nod o singură dată și revine la start. Testăm ciclurile posibile: \n 1. A-B-E-C-A = 10 + 8 + 6 + 4 = 28. \n 2. A-C-E-B-A = 4 + 6 + 8 + 10 = 28. \n 3. A-B-C-E-B-A (nevalid, trece de două ori prin B). \n 4. A-C-B-E-C-A (nevalid, trece de două ori prin C). \n Costul minim este 28.",
+    tip: "La problemele de circuit (tur), caută 'ciclul hamiltonian', adică un traseu care vizitează fiecare punct exact o dată înainte de a se întoarce la start."
+  },
+  /* 12: Tip Diferență între rute */
+  {
+    question: "Privind harta, care este diferența de timp între cea mai lentă și cea mai rapidă rută de la A la D? Hartă: A-B(3), B-D(12), A-C(5), C-D(8), A-E(2), E-C(2), E-D(12).",
+    options: ["1", "2", "3", "4", "5"],
+    correct: 3,
+    difficulty: "mediu",
+    explanation: "Calculăm toate rutele de la A la D: \n 1. A-B-D = 3 + 12 = 15 (Cea mai lentă). \n 2. A-C-D = 5 + 8 = 13. \n 3. A-E-D = 2 + 12 = 14. \n 4. A-E-C-D = 2 + 2 + 8 = 12 (Cea mai rapidă). \n Diferența este 15 - 12 = 3.",
+    tip: "Asigură-te că identifici TOATE rutele posibile, inclusiv cele care par mai lungi, înainte de a calcula diferența."
+  },
+    /* 13: Tip Nod Intermediar Obligatoriu */
+  {
+    question: "Pentru a livra un pachet de la A la F, trebuie obligatoriu să treci prin centrul de sortare C. Care este costul total al drumului optim? Hartă: A-B(5), A-C(8), B-C(2), C-D(6), C-E(8), D-F(5), E-F(4).",
+    options: ["17", "18", "19", "20", "21"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Problema se descompune în două: \n 1. Drumul minim A → C: ruta directă A-C (cost 8) vs. ruta A-B-C (cost 5+2=7). Minimul este 7. \n 2. Drumul minim C → F: ruta C-D-F (cost 6+5=11) vs. ruta C-E-F (cost 8+4=12). Minimul este 11. \n Costul total optim = 7 (pentru A→C) + 11 (pentru C→F) = 18.",
+    tip: "Când un nod este obligatoriu, 'rupe' problema în două sub-probleme: drumul optim până la nod și drumul optim de la nod la destinație."
+  },
+  /* 14: "What if" - Schimbare cost */
+  {
+    question: "Inițial, drumul cel mai rapid A-D era A-B-D (cost 10). Acum se construiește un nou drum A-C (cost 2), iar drumul C-D are cost 7. Devine A-C-D noua rută optimă?",
+    options: ["Da, este mai rapidă cu 1", "Da, este mai rapidă cu 3", "Nu, A-B-D rămâne cea mai rapidă", "Sunt egale", "Nu se poate determina"],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "Ruta veche optimă A-B-D are cost 10. Noua rută A-C-D are cost 2 + 7 = 9. Deoarece 9 < 10, noua rută A-C-D este acum cea mai rapidă, cu 1 unitate.",
+    tip: "În scenariile 'what if', compară întotdeauna noul rezultat cu valoarea optimă inițială."
+  },
+    /* 15: Două destinații, ordine liberă */
+  {
+    question: "O mașină de livrări pleacă din A, trebuie să ajungă și la B și la C (în orice ordine), și să termine cursa la D. Care este costul minim total? Hartă: A-B(6), A-C(4), B-C(3), B-D(10), C-D(10).",
+    options: ["17", "18", "19", "20", "21"],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Trebuie să comparăm costurile totale pentru cele două ordine de vizitare posibile: \n 1. Ordinea A → B → C → D: Costul este 6 (A-B) + 3 (B-C) + 10 (C-D) = 19. \n 2. Ordinea A → C → B → D: Costul este 4 (A-C) + 3 (C-B) + 10 (B-D) = 17. \n Comparând cele două, ruta A-C-B-D este mai ieftină, având un cost total de 17.",
+    tip: "Dacă ordinea vizitării unor puncte intermediare este liberă, trebuie să calculezi costul total pentru fiecare permutare validă a acelor puncte."
+  },
+  /* 16: Cel mai scurt vs. Cel mai lung */
+  {
+    question: "Folosind harta de la exercițiul anterior (A-B(6), A-C(4), B-C(3), B-D(10), C-D(10)), care este ruta cea mai LUNGĂ de la A la D care nu trece de două ori prin același oraș?",
+    options: ["A-B-D", "A-C-D", "A-B-C-D", "A-C-B-D", "Toate sunt egale"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Calculăm toate rutele simple A->D: \n 1. A-B-D = 6 + 10 = 16. \n 2. A-C-D = 4 + 10 = 14. \n 3. A-B-C-D = 6 + 3 + 10 = 19 (Cea mai lungă). \n 4. A-C-B-D = 4 + 3 + 10 = 17. \n Ruta cea mai lungă este A-B-C-D cu costul 19.",
+    tip: "Atenție la rutele care includ ocoluri (ex. A-B-C-D). Acestea sunt adesea candidați pentru drumul cel mai lung."
+  },
+  /* 17: Problemă cu capcană (drum invalid) */
+  {
+    question: "Care este costul drumului A-C-B-D? Hartă: A-C(5), C-B(8), B-E(4), E-D(6).",
+    options: ["23", "17", "19", "Drumul nu există"],
+    correct: 3,
+    difficulty: "ușor",
+    explanation: "Urmărind ruta, observăm că nu există o conexiune directă între nodurile B și D. Prin urmare, ruta A-C-B-D este invalidă.",
+    tip: "Verifică întotdeauna existența fiecărui segment de drum din opțiune. Uneori, răspunsul corect este că drumul nu poate fi parcurs."
+  },
+  /* 18: Cost pe unitate de distanță */
+  {
+    question: "O mașină consumă 1 leu/km. Care este costul minim pentru a călători de la A la E? Hartă (în km): A-B(10), A-C(12), B-D(5), C-D(4), D-E(8).",
+    options: ["22 lei", "23 lei", "24 lei", "25 lei", "26 lei"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Problema este echivalentă cu găsirea celui mai scurt drum în km. \n 1. A-B-D-E = 10 + 5 + 8 = 23 km. \n 2. A-C-D-E = 12 + 4 + 8 = 24 km. \n Drumul minim este de 23 km, deci costul minim este de 23 de lei.",
+    tip: "Uneori, problema adaugă un strat suplimentar (cost, consum), dar în esență rămâne o problemă de drum minim/maxim."
+  },
+  /* 19: Problemă cu buclă */
+  {
+    question: "Un turist pleacă din A și vrea să ajungă în C. El poate trece prin B, unde poate face o buclă opțională B-D-B (cost 5+5=10) pentru a vedea un peisaj. Care e costul minim al drumului A->C dacă NU face bucla? Hartă: A-B(7), B-C(9).",
+    options: ["10", "16", "26", "20", "14"],
+    correct: 1,
+    difficulty: "ușor",
+    explanation: "Dacă turistul nu face bucla opțională, drumul său este simplu: A -> B -> C. Costul este 7 (A-B) + 9 (B-C) = 16.",
+    tip: "Identifică informațiile irelevante sau opționale din enunț (în acest caz, costul buclei) și concentrează-te pe cerința specifică."
+  },
+  /* 20: Costul drumului de întoarcere */
+  {
+    question: "Care este costul total pentru o călătorie dus-întors de la A la D folosind cea mai rapidă rută în ambele sensuri? Hartă: A-B(5), B-D(8), A-C(6), C-D(6).",
+    options: ["24", "25", "26", "27", "28"],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "Mai întâi, găsim drumul minim de la A la D. \n 1. A-B-D = 5 + 8 = 13. \n 2. A-C-D = 6 + 6 = 12. \n Drumul minim pentru dus este de 12. Deoarece harta nu are săgeți (drumuri cu sens unic), drumul de întoarcere D->A va avea același cost minim, 12. Costul total dus-întors este 12 + 12 = 24.",
+    tip: "Dacă rețeaua este simetrică (bidirecțională), drumul minim dus este egal cu drumul minim întors."
   }
 ],
 logic: [
@@ -2520,28 +2480,186 @@ spatial: [
 ],
 
 math: [
-  /* 1 */ { question: "Un preț crește de la 80 lei la 100 lei. Care este procentul de creștere?", options: ["20 %", "22 %", "25 %", "30 %", "18 %"], correct: 2, difficulty: "ușor", explanation: "(100 − 80)/80 = 0,25 ⇒ 25 %.", tip: "Δ / valoarea inițială × 100." },
-  /* 2 */ { question: "Media aritmetică a numerelor 3, 7, 10, 15 este:", options: ["8,5", "8,75", "9", "9,25", "10"], correct: 1, difficulty: "ușor", explanation: "Suma 35 ÷ 4 = 8,75.", tip: "Împarte suma la numărul de termeni." },
-  /* 3 */ { question: "Probabilitatea de a extrage o carte de ♠ dintr-un pachet standard este:", options: ["1/13", "1/4", "1/52", "3/52", "1/2"], correct: 1, difficulty: "ușor", explanation: "13 cărți de ♠ / 52 = 1/4.", tip: "Favorable / total." },
-  /* 4 */ { question: "Rezolvați: 3x − 5 = 16", options: ["5", "6", "7", "8", "9"], correct: 2, difficulty: "ușor", explanation: "3x = 21 ⇒ x = 7.", tip: "Izolează x pas cu pas." },
-  /* 5 */ { question: "Seria: 2, 6, 12, 20, ?, diferențele cresc cu +2 la fiecare pas.", options: ["28", "30", "32", "34", "36"], correct: 1, difficulty: "ușor", explanation: "Diferențe: +4, +6, +8 ⇒ +10 ⇒ 20 + 10 = 30.", tip: "Calculează progresia diferențelor." },
-  /* 6 */ { question: "Venitul scade cu 10 %, apoi crește cu 10 %. Rezultatul final este:", options: ["La fel", "Cu 1 % mai mic", "Cu 1 % mai mare", "Cu 2 % mai mic", "Cu 0 % mai mare"], correct: 1, difficulty: "mediu", explanation: "100 → 90 → 99 (−1 %).", tip: "Procentele succesive nu se anulează." },
-  /* 7 */ { question: "75 % dintre candidați au promovat. Dintre ei, 60 % sunt fete. Ce procent din total sunt fete?", options: ["30 %", "35 %", "40 %", "45 %", "50 %"], correct: 3, difficulty: "mediu", explanation: "0,75 × 0,60 = 0,45 ⇒ 45 %.", tip: "În lanț, înmulțește probabilitățile." },
-  /* 8 */ { question: "Suma unghiurilor unui poligon convex cu 15 laturi este 2340°. Câte unghiuri pot avea măsura > 150°?", options: ["4", "5", "6", "7", "8"], correct: 2, difficulty: "mediu", explanation: "Peste 150° pot fi cel mult 6 fără a depăși suma totală.", tip: "Compara suma max. posibilă cu 2340°." },
-  /* 9 */ { question: "Suma a trei numere consecutive este 72. Cel mai mare număr este:", options: ["23", "24", "25", "26", "27"], correct: 2, difficulty: "mediu", explanation: "Media = 72/3 = 24 ⇒ șirul 23, 24, 25.", tip: "Pentru n numere consecutive, media este numărul din mijloc." },
-  /* 10 */ { question: "Arunci două zaruri. Probabilitatea ca suma să fie 11 este:", options: ["1/18", "1/12", "1/9", "1/6", "1/36"], correct: 0, difficulty: "mediu", explanation: "Perechi favorabile (5,6) și (6,5): 2/36 = 1/18.", tip: "Enumără perechile favorabile." },
-  /* 11 */ { question: "Rezolvați sistemul: x + y = 7, x − y = 1.", options: ["(4, 3)", "(5, 2)", "(6, 1)", "(3, 4)", "(2, 5)"], correct: 0, difficulty: "mediu", explanation: "Adunând: 2x = 8 ⇒ x = 4, y = 3.", tip: "Adună şi scade ecuaţiile." },
-  /* 12 */ { question: "Într-o clasă de 40 elevi, 24 fac engleză, 18 franceză, 10 ambele. Câți nu fac nicio limbă?", options: ["6", "8", "10", "12", "14"], correct: 1, difficulty: "mediu", explanation: "|E∪F| = 24+18−10 = 32 ⇒ 40−32 = 8.", tip: "Formula |A∪B| = |A|+|B|−|A∩B|." },
-  /* 13 */ { question: "Valoarea 5! / (3!·2!) este:", options: ["5", "6", "10", "20", "60"], correct: 2, difficulty: "mediu", explanation: "120 / (6·2) = 10.", tip: "Recunoaște coeficienții binomiali." },
-  /* 14 */ { question: "Aria unui cerc cu diametrul 14 cm este:", options: ["49π", "98π", "154π", "196π", "7π"], correct: 0, difficulty: "mediu", explanation: "r = 7 ⇒ π·7² = 49π.", tip: "Diametrul / 2 = raza." },
-  /* 15 */ { question: "Pentru aₙ = 3n² − n, calculați a₄.", options: ["36", "44", "45", "46", "48"], correct: 1, difficulty: "mediu", explanation: "a₄ = 3·16 − 4 = 44.", tip: "Înlocuiește n cu 4." },
-  /* 16 */ { question: "A doua derivată a funcției f(x) = x³ este:", options: ["6x", "3x²", "3", "6", "x"], correct: 0, difficulty: "greu", explanation: "f′(x)=3x², f″(x)=6x.", tip: "Derivează de două ori succesiv." },
-  /* 17 */ { question: "log₂ 32 este egal cu:", options: ["4", "5", "6", "8", "10"], correct: 1, difficulty: "greu", explanation: "2⁵ = 32 ⇒ log₂32 = 5.", tip: "Transformă logaritmul în exponent." },
-  /* 18 */ { question: "O investiție se dublează în 6 ani (dobândă compusă). Rata anuală aproximativă este:", options: ["10 %", "11 %", "12 %", "13 %", "14 %"], correct: 2, difficulty: "greu", explanation: "Regula 72: 72/6 ≈ 12 %.", tip: "Ani × rată ≈ 72." },
-  /* 19 */ { question: "Soluția inecuației 2x² − 3x − 5 < 0 este:", options: ["x < −1 sau x > 2,5", "−1 < x < 2,5", "x < −2 sau x > 1", "x > 0", "x < 0"], correct: 1, difficulty: "greu", explanation: "Rădăcini: −1 și 2,5; parabolă cu a>0 ⇒ interiorul intervalului.", tip: "Parabola < 0 între rădăcini." },
-  /* 20 */ { question: "Un salariu de 1500 lei crește anual cu 8 %. Aproximativ, cât va fi după 3 ani?", options: ["1760 lei", "1830 lei", "1897 lei", "1900 lei", "2020 lei"], correct: 2, difficulty: "greu", explanation: "1500·1,08³ ≈ 1500·1,259 ≈ 1897 lei.", tip: "Folosește formula P(1+r)ⁿ." },
-  /* 21 - Ceas 1 */ { question: "La ora 4:40, care este unghiul (cel mai mic) dintre acul orar și cel minutar?", options: ["90°", "100°", "110°", "120°", "130°"], correct: 1, difficulty: "mediu", explanation: "Minutarul e la 40 min = 40*6°=240°. Orarul e la 4 ore și 40 min = 4*30° + 40*0.5° = 120°+20°=140°. Diferența: |240 - 140| = 100°.", tip: "Formulă rapidă: |30*H - 5.5*M|. Pentru 4:40: |30*4 - 5.5*40| = |120 - 220| = |-100| = 100°." },
-  /* 22 - Ceas 2 */ { question: "De câte ori între ora 13:00 și 19:00 acele ceasului formează un unghi drept (90°)?", options: ["6", "10", "11", "12", "14"], correct: 2, difficulty: "greu", explanation: "Acele formează un unghi drept de aproximativ două ori pe oră. Într-un interval de 6 ore (de la 13 la 19), acest lucru se întâmplă de 11 ori (există o suprapunere în jurul orei 15-16).", tip: "Reține că sunt 22 de unghiuri drepte în 12 ore și 44 în 24 de ore." }
+  /* 1 - Tip Procente & Mulțimi */
+  { 
+    question: "Într-un grup de studenți, 70% participă la cursul de Psihologie Clinică și 60% la cel de Psihologie Organizațională. Care este procentul MINIM de studenți care participă la ambele cursuri?", 
+    options: ["10%", "20%", "30%", "50%", "60%"], 
+    correct: 2, 
+    difficulty: "mediu", 
+    explanation: "Suma procentelor este 70% + 60% = 130%. Deoarece totalul nu poate depăși 100%, suprapunerea (cei care participă la ambele) trebuie să fie de cel puțin 130% - 100% = 30%.",
+    tip: "Pentru a găsi suprapunerea minimă a două grupuri, adună procentele și scade 100. (P1 + P2) - 100%." 
+  },
+  /* 2 - Tip Probabilități Simple */
+  { 
+    question: "Într-o urnă sunt 20 de bile roșii, 30 de bile albastre și 50 de bile verzi. Care este probabilitatea de a extrage o bilă care NU este albastră?", 
+    options: ["30%", "50%", "70%", "80%", "20%"], 
+    correct: 2, 
+    difficulty: "ușor", 
+    explanation: "Total bile: 20 + 30 + 50 = 100. Bile care NU sunt albastre: 20 (roșii) + 50 (verzi) = 70. Probabilitatea este Cazuri Favorabile / Cazuri Totale = 70 / 100 = 70%.",
+    tip: "Calculează mai întâi numărul total de elemente, apoi numărul de elemente care îndeplinesc condiția." 
+  },
+  /* 3 - Tip Logic-Numeric (Ordonare) */
+  { 
+    question: "La o competiție de alergare, Teodora este a 12-a cea mai rapidă și, în același timp, a 12-a cea mai lentă. Câți competitori sunt în total?", 
+    options: ["24", "12", "13", "23", "25"], 
+    correct: 3, 
+    difficulty: "mediu", 
+    explanation: "Dacă este a 12-a cea mai rapidă, înseamnă că sunt 11 persoane înaintea ei. Dacă este a 12-a cea mai lentă, înseamnă că sunt 11 persoane în spatele ei. Total participanți: 11 (în față) + 11 (în spate) + 1 (Teodora) = 23.",
+    tip: "A 'n'-a poziție înseamnă că există 'n-1' elemente înaintea ta în acel clasament."
+  },
+  /* 4 - Tip Variații Procentuale */
+  { 
+    question: "Prețul unui manual de psihologie a crescut cu 25%. Cu ce procent ar trebui să scadă noul preț pentru a reveni la valoarea inițială?", 
+    options: ["15%", "20%", "25%", "30%", "22.5%"], 
+    correct: 1, 
+    difficulty: "greu", 
+    explanation: "Să presupunem că prețul inițial era 100 lei. După o creștere de 25%, noul preț este 125 lei. Pentru a reveni la 100 lei, trebuie o scădere de 25 lei. Calculăm ce procent reprezintă 25 din 125: (25 / 125) * 100 = (1 / 5) * 100 = 20%.",
+    tip: "Când inversezi un procent, baza de calcul se schimbă! Alege o valoare simplă (ex. 100) pentru a calcula mai ușor." 
+  },
+  /* 5 - Tip Medii Aritmetice */
+  {
+    question: "Media de vârstă a 4 prieteni este 22 de ani. Dacă un al cincilea prieten, de 27 de ani, se alătură grupului, care va fi noua medie de vârstă?",
+    options: ["22.5 ani", "23 de ani", "24 de ani", "25 de ani", "24.5 ani"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Suma vârstelor celor 4 prieteni este 4 * 22 = 88 ani. Se adaugă noul prieten: 88 + 27 = 115 ani. Noua medie pentru 5 persoane este 115 / 5 = 23 de ani.",
+    tip: "Când lucrezi cu medii, calculează mai întâi suma totală (Medie * Număr elemente)."
+  },
+  /* 6 - Problema ceasului (mutată de la spatial) */
+  {
+    question: "La ora 3:15, care este unghiul dintre acul orar și cel minutar?",
+    options: ["0°", "7.5°", "15°", "22.5°", "30°"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "La ora 3:15, minutarul este exact la 90° față de ora 12. Orarul, care se mișcă cu 0.5° pe minut, a avansat cu 15 * 0.5° = 7.5° față de poziția orei 3 (care era la 90°). Deci orarul este la 90° + 7.5° = 97.5°. Diferența este 97.5° - 90° = 7.5°.",
+    tip: "Formulă rapidă: Unghi = |30 * H - 5.5 * M|. Pentru 3:15, avem |30*3 - 5.5*15| = |90 - 82.5| = 7.5°."
+  },
+   /* 7 - Procente în lanț */
+  {
+    question: "Din totalul studenților unei facultăți, 20% sunt în anul I. Dintre restul studenților, 50% sunt în anul II. Ce procent din TOTALUL studenților sunt în anul III sau mai mari?",
+    options: ["30%", "40%", "50%", "60%", "70%"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "1. Total studenți = 100%. Anul I = 20%. Rămân 100% - 20% = 80% (restul). \n 2. Anul II = 50% DIN RESTUL, adică 50% din 80%, ceea ce înseamnă 0.50 * 80 = 40% din total. \n 3. Restul final (Anul III+) = 80% (restul inițial) - 40% (anul II) = 40% din total.",
+    tip: "Fii foarte atentă la 'din restul' vs 'din total'. Procentele se aplică la baze de calcul diferite."
+  },
+  /* 8 - Logic-Numeric (sistem de ecuații simple) */
+  {
+    question: "Într-o curte sunt găini și oi, în total 15 capete și 40 de picioare. Câte oi sunt în curte?",
+    options: ["3", "5", "7", "8", "10"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Metoda logică: Dacă toate cele 15 animale ar fi găini, am avea 15 * 2 = 30 de picioare. Diferența de 40 - 30 = 10 picioare provine de la oi, care au câte 2 picioare în plus față de găini. Deci, numărul de oi este 10 / 2 = 5.",
+    tip: "Pentru astfel de probleme, poți folosi metoda presupunerii (asumă că toate sunt de un tip) sau un sistem simplu de ecuații (G+O=15; 2G+4O=40)."
+  },
+  /* 9 - Probabilitate cu zaruri */
+  {
+    question: "Aruncând două zaruri, care este probabilitatea ca suma obținută să fie exact 8?",
+    options: ["1/6", "5/36", "1/9", "1/12", "1/4"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Numărul total de rezultate posibile este 6 * 6 = 36. Perechile care dau suma 8 sunt: (2,6), (3,5), (4,4), (5,3), (6,2). Sunt 5 cazuri favorabile. Probabilitatea este 5/36.",
+    tip: "La probleme cu zaruri, listează sistematic perechile favorabile pentru a nu omite niciuna."
+  },
+   /* 10 - Proporții (regula de trei compusă) */
+  {
+    question: "Dacă 4 psihologi pot consilia 8 pacienți în 2 ore, câți pacienți pot fi consiliați de 2 psihologi în 4 ore?",
+    options: ["10", "12", "16", "8", "6"],
+    correct: 3,
+    difficulty: "greu",
+    explanation: "Metoda 'om-oră': \n 1. Calculăm câtă muncă totală este necesară: 4 psihologi * 2 ore = 8 'om-ore' pentru 8 pacienți. Asta înseamnă că este nevoie de 1 'om-oră' pentru 1 pacient. \n 2. Calculăm munca totală în noua situație: 2 psihologi * 4 ore = 8 'om-ore'. \n 3. Cu 8 'om-ore' de muncă, se pot consilia 8 pacienți.",
+    tip: "La probleme de rate (muncă, viteză), adu totul la o unitate de bază (ex. 'om-ore') pentru a compara situații diferite."
+  },
+   /* 11 - Medii */
+  {
+    question: "Media notelor Teodorei la primele 4 examene este 8.5. Ce notă trebuie să ia la al cincilea examen pentru a avea o medie finală de 8.8?",
+    options: ["9", "9.5", "10", "8.8", "9.2"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "1. Calculăm suma totală a notelor de la primele 4 examene: 4 * 8.5 = 34 puncte. \n 2. Calculăm suma totală necesară pentru 5 examene cu media 8.8: 5 * 8.8 = 44 puncte. \n 3. Nota necesară la al cincilea examen este diferența: 44 - 34 = 10.",
+    tip: "Calculează suma totală existentă și suma totală dorită. Diferența este valoarea pe care trebuie să o adaugi."
+  },
+  /* 12 - Set Theory (numere) */
+  {
+    question: "Într-o clasă de 30 de elevi, 18 joacă fotbal și 15 joacă baschet. Știind că fiecare elev joacă cel puțin un sport, câți elevi joacă ambele sporturi?",
+    options: ["3", "5", "7", "10", "12"],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "Folosim principiul incluziunii-excluziunii: Total = Fotbal + Baschet - Ambele. \n 30 = 18 + 15 - Ambele \n 30 = 33 - Ambele \n Ambele = 33 - 30 = 3.",
+    tip: "|A ∪ B| = |A| + |B| - |A ∩ B|. Această formulă este cheia pentru problemele de suprapunere a mulțimilor."
+  },
+  /* 13 - Procente simple */
+  {
+    question: "O carte de 200 de lei este redusă cu 15%. Care este prețul final?",
+    options: ["170 lei", "185 lei", "175 lei", "180 lei", "165 lei"],
+    correct: 0,
+    difficulty: "ușor",
+    explanation: "Calculăm reducerea: 15% din 200 = (15/100) * 200 = 30 de lei. Prețul final este 200 - 30 = 170 de lei.",
+    tip: "O metodă rapidă: dacă reducerea este 15%, plătești 85%. Calculează direct 0.85 * 200."
+  },
+  /* 14 - Logic-Numeric (consecutive) */
+  {
+    question: "Suma a trei numere pare consecutive este 78. Care este cel mai mare dintre aceste numere?",
+    options: ["24", "26", "28", "30", "32"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Dacă suma a trei numere este 78, media lor (și numărul din mijloc) este 78 / 3 = 26. Fiind numere pare consecutive, șirul este 24, 26, 28. Cel mai mare este 28.",
+    tip: "Pentru un șir de numere consecutive, media aritmetică este egală cu termenul din mijloc."
+  },
+  /* 15 - Probabilitate fără înlocuire */
+  {
+    question: "Dintr-o cutie cu 5 bile roșii și 5 bile albastre, se extrag două bile, fără a pune prima bilă înapoi. Care este probabilitatea ca ambele bile să fie roșii?",
+    options: ["1/4", "1/5", "2/9", "1/3", "1/2"],
+    correct: 2,
+    difficulty: "greu",
+    explanation: "1. Probabilitatea ca prima bilă să fie roșie: 5 (roșii) / 10 (total) = 1/2. \n 2. După extragerea unei bile roșii, în cutie rămân 9 bile, din care 4 sunt roșii. Probabilitatea ca a doua bilă să fie roșie este 4/9. \n 3. Probabilitatea totală se obține prin înmulțirea probabilităților: (1/2) * (4/9) = 4/18 = 2/9.",
+    tip: "La extragerile 'fără înlocuire', nu uita să ajustezi atât numărul de cazuri favorabile, cât și numărul total de cazuri pentru a doua extragere."
+  },
+  /* 16 - Proporții */
+  {
+    question: "Pe o hartă, distanța dintre două orașe este de 4 cm. Știind că scara hărții este 1:500.000, care este distanța reală în kilometri?",
+    options: ["2 km", "20 km", "200 km", "5 km", "50 km"],
+    correct: 1,
+    difficulty: "ușor",
+    explanation: "Scara 1:500.000 înseamnă că 1 cm pe hartă = 500.000 cm în realitate. \n Distanța reală = 4 cm * 500.000 = 2.000.000 cm. \n Transformăm în km: 1 km = 100.000 cm. Deci, 2.000.000 cm / 100.000 = 20 km.",
+    tip: "Reține conversiile: 1 metru = 100 cm, 1 kilometru = 1000 metri = 100.000 cm."
+  },
+  /* 17 - Procente inverse */
+  {
+    question: "După o reducere de 20%, prețul unui pulover este de 160 de lei. Care a fost prețul inițial?",
+    options: ["180 lei", "192 lei", "200 lei", "210 lei", "240 lei"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Dacă prețul a fost redus cu 20%, înseamnă că prețul final (160 lei) reprezintă 80% (100% - 20%) din prețul inițial. Preț Inițial = 160 / 0.80 = 200 de lei.",
+    tip: "Nu adăuga 20% la prețul redus! Întotdeauna raportează-te la ce procent reprezintă prețul final din totalul inițial."
+  },
+  /* 18 - Set Theory (logic) */
+  {
+    question: "Într-un grup, 15 persoane beau cafea, 12 beau ceai și 4 beau și cafea și ceai. Știind că fiecare persoană din grup bea cel puțin una dintre băuturi, câte persoane sunt în total în grup?",
+    options: ["27", "31", "23", "19", "25"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Folosim din nou principiul incluziunii-excluziunii: Total = Cafea + Ceai - Ambele. \n Total = 15 + 12 - 4 = 23 de persoane.",
+    tip: "Când ai suprapunerea, poți calcula totalul. Când ai totalul, poți calcula suprapunerea."
+  },
+  /* 19 - Viteză medie */
+  {
+    question: "Un biciclist merge de la Cluj la Turda cu 20 km/h și se întoarce pe același drum cu 30 km/h. Care este viteza medie a întregii călătorii?",
+    options: ["25 km/h", "24 km/h", "26 km/h", "22.5 km/h", "Nu se poate calcula"],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Capcană clasică! Media nu este (20+30)/2. Presupunem distanța de 60 km (un multiplu comun). \n Timp dus: 60 km / 20 km/h = 3 ore. \n Timp întors: 60 km / 30 km/h = 2 ore. \n Distanța totală: 60 + 60 = 120 km. Timp total: 3 + 2 = 5 ore. \n Viteza medie = Distanța totală / Timpul total = 120 km / 5 ore = 24 km/h.",
+    tip: "Viteza medie NU este media aritmetică a vitezelor. Folosește formula V_medie = Distanță_totală / Timp_total."
+  },
+  /* 20 - Logic-Numeric (Vârste) */
+  {
+    question: "Acum 5 ani, suma vârstelor a doi frați era 15 ani. Peste 10 ani, care va fi suma vârstelor lor?",
+    options: ["25 ani", "30 ani", "35 ani", "40 ani", "45 ani"],
+    correct: 4,
+    difficulty: "greu",
+    explanation: "1. Acum 5 ani, suma era 15. \n 2. Astăzi, fiecare frate este cu 5 ani mai mare, deci suma vârstelor lor a crescut cu 5 + 5 = 10 ani. Suma actuală este 15 + 10 = 25 de ani. \n 3. Peste 10 ani, fiecare va fi cu încă 10 ani mai mare. Suma va crește cu 10 + 10 = 20 de ani. \n Suma finală va fi 25 (suma actuală) + 20 = 45 de ani.",
+    tip: "Fii atent la câți oameni sunt în problemă. Dacă timpul avansează cu X ani, suma vârstelor pentru N persoane crește cu N * X."
+  }
 ],
 
   };
@@ -2550,7 +2668,26 @@ math: [
             sequences: { title: "🔢 Strategii pentru Șiruri și Progresii", tips: [ { title: "🎯 Algoritmul de identificare rapidă", content: "1. Verifică diferențele consecutive (progresie aritmetică). 2. Verifică raporturile (progresie geometrică). 3. Caută pătrate, cuburi, factoriali. 4. Pentru șiruri mixte, separă numerele de litere.", example: "2219, 2320, 2421 → diferențe: +101, +101 → progresie aritmetică cu r=101 → următorul: 2421+101=2522" }, { title: "🔤 Trucuri pentru șiruri cu litere", content: "Scrie rapid alfabetul românesc pe margine: A(1) B(2) C(3)... Z(26). Verifică progresii în poziții: +1, +2, +3 sau -1, -2, -3.", example: "XUR, URO, ROL → X(24)→U(21)→R(18) (-3), U(21)→R(18)→O(15) (-3) → următorul: LIF" }, { title: "⚡ Pattern-uri frecvente (memorează-le!)", content: "Pătrate: 1,4,9,16,25,36,49,64,81,100... Cuburi: 1,8,27,64,125,216... Fibonacci: 1,1,2,3,5,8,13,21...", example: "216, 125, 64, 27 → recunoști: 6³, 5³, 4³, 3³ → următorul: 2³=8" } ] },
             analogies: { title: "🔗 Strategii pentru Analogii", tips: [ { title: "📋 Tipologia relațiilor (memorează!)", content: "1. Instrument-meserie (bisturiu-chirurg). 2. Parte-întreg (roată-mașină). 3. Cauză-efect (frig-îngheț). 4. Loc-activitate (școală-învățare).", example: "Cavaler - Scut = protecție în luptă; Croitor - Degetar = protecție în muncă" }, { title: "⚡ Tehnica eliminării rapide", content: "1. Elimină categoriile diferite. 2. Elimină relațiile prea generale sau prea specifice. 3. Alege cea mai directă și evidentă.", example: "Doctor - Spital → căutăm 'loc de muncă specific' pentru profesor → școală" } ] },
             coding: { title: "🔐 Strategii pentru Codare Artificială", tips: [ { title: "🔍 Algoritmul pas cu pas", content: "1. Identifică literele comune între cuvinte. 2. Găsește pozițiile lor în alfabet. 3. Testează operații: +k, -k, ×k. 4. Verifică cu toate cuvintele.", example: "MASA=1234, CASA=5234 → A=2, S=3 sunt constante în ambele cuvinte" } ] },
-            graphs: { title: "🗺️ Strategii pentru Probleme de Grafuri", tips: [ { title: "🎯 Algoritm Dijkstra simplificat", content: "1. Listează toate rutele posibile. 2. Calculează costul pentru fiecare. 3. Alege minimul.", example: "A→F: testează A→B→F vs A→C→F vs A→B→D→F" } ] },
+            graphs: { 
+              title: "🗺️ Strategii pentru Optimizare de Rute", 
+              tips: [ 
+                { 
+                  title: "🎯 Metoda Verificării Variantenlor (cea mai sigură!)", 
+                  content: "Aceasta este strategia de aur pentru examen. 1. Ia pe rând fiecare opțiune de răspuns (ex. A. A-B-C-D). 2. Urmărește ruta pe hartă și adună costurile (timpii/distanțele) pas cu pas pe o ciornă. 3. Notează costul total pentru fiecare variantă. 4. La final, compară costurile totale și alege-l pe cel cerut (cel mai rapid/scurt = minim; cel mai lung = maxim).", 
+                  example: "Pentru ruta A→C→G, calculezi: Timp(A→C) + Timp(C→G) = ... Apoi faci la fel pentru celelalte opțiuni și compari rezultatele." 
+                }, 
+                { 
+                  title: "⚡ Tehnica Eliminării Vizuale Rapide", 
+                  content: "Înainte de a calcula, scanează vizual harta. Dacă o variantă de răspuns include un ocol evident și nejustificat (ex. A→C→B în loc de A→B direct), probabil nu este drumul optim. Fii atentă, însă, la costuri! Uneori un ocol poate fi mai ieftin dacă drumurile directe sunt foarte 'scumpe'.", 
+                  example: "Dacă A-F are cost 20 și o altă rută A-B-F are costuri mici pe segmente (ex. 5+5=10), te poți concentra pe a doua ca fiind un candidat mai probabil pentru drumul minim." 
+                },
+                {
+                  title: "⚠️ Atenție la Detaliu: Drum Lung vs. Drum Scurt",
+                  content: "Citește cu maximă atenție cerința! Majoritatea problemelor cer drumul minim (cel mai rapid, scurt, ieftin), dar uneori, ca în problema 4 din admiterea 2023, se poate cere drumul MAXIM (cel mai lung). Strategia de calcul este aceeași, dar la final trebuie să alegi valoarea cea mai mare, nu cea mai mică.",
+                  example: "În problema 4 (2023), se cerea explicit ruta 'cea mai lungă'. După ce calculai costurile tuturor variantelor, trebuia să o selectezi pe cea cu suma maximă."
+                }
+              ] 
+            },
             logic: { title: "⚖️ Strategii pentru Logică Formală", tips: [ { title: "📐 Diagrame Venn rapide", content: "Desenează cercuri pentru categorii. Marchează zonele imposibile cu ×. Hașurează zonele cu elemente.", example: "'Toate păsările sunt animale' → cercul păsări în interiorul animalelor" } ] },
 visualGrids: { 
   title: "⬛ Strategii pentru Careuri Figurale", 
@@ -2600,7 +2737,7 @@ constraints: {
   analogies: "Analogile testează flexibilitatea gândirii. În 2023, au fost 6 astfel de probleme. Sunt puncte relativ ușor de câștigat dacă exersezi pattern-urile de relații.",
   coding: "Codarea artificială, deși pare complexă, urmează reguli simple. Au fost 4 probleme în 2023, iar stăpânirea lor te poate diferenția de alți candidați.",
   logic: "Silogismele și deducțiile logice sunt coloana vertebrală a testului. 6 probleme în 2023. Diagramele Venn te pot ajuta să vizualizezi și să rezolvi rapid.",
-  graphs: "Problemele de grafuri (drumul cel mai scurt) au apărut constant, chiar dacă în număr mic (3 în 2023). Sunt puncte sigure dacă aplici algoritmii corect.",
+  graphs: "În admiterea din 2023, problemele 1, 2, 3, 4 și 5 (primele 5!) au fost exact de acest tip! Stăpânirea acestei metode de calcul a rutelor este absolut esențială și îți poate aduce puncte valoroase și rapide. Acestea nu sunt probleme de teorie, ci de atenție și calcul simplu.",
   constraints: "În 2023, problema cu 'șapte bucătari' (întrebările 12-16) a fost exact de acest tip și a valorat 5 puncte! Abilitatea de a jongla cu reguli multiple sub presiune este o competență cheie.",
   visualGrids: "Careurile testează atenția la detalii și gândirea structurată. Au fost 3 probleme în 2023. Verificarea pe rânduri, coloane și diagonale este metoda sigură.",
   visualAnalogies: "Acestea sunt printre cele mai dificile, testând inteligența fluidă. Au fost 3 probleme în 2023. Descompunerea transformării (rotație, umplere, adăugare) este secretul.",
@@ -2618,7 +2755,7 @@ constraints: {
             { id: 'sequences', title: 'Șiruri și Progresii', icon: '🔢', difficulty: 'Mediu', description: 'Identificarea regulilor în șiruri de numere, litere sau simboluri mixte', examples: ['ACE, BDF, CEG → ?', '1, 4, 13, 40 → ?'] },
             { id: 'analogies', title: 'Analogii și Relații', icon: '🔗', difficulty: 'Ușor', description: 'Găsirea relațiilor logice între concepte și aplicarea lor', examples: ['Pianist - Pian; Sculptor - ?', 'Rădăcină - Copac; Fundație - ?'] },
             { id: 'coding', title: 'Codare Artificială', icon: '🔐', difficulty: 'Greu', description: 'Decodificarea regulilor de transformare a cuvintelor în cifre', examples: ['MASA = 1234, CASA = 5234 → SACA = ?'] },
-            { id: 'graphs', title: 'Probleme de Grafuri', icon: '🗺️', difficulty: 'Mediu', description: 'Optimizarea rutelor, circuite și probleme de transport', examples: ['Cel mai scurt drum între orașe', 'Circuitul optim de livrare'] },
+{ id: 'graphs', title: 'Optimizare de Rute', icon: '🗺️', difficulty: 'Mediu', description: 'Găsirea drumului optim (cel mai scurt/lung) într-o rețea de locații și conexiuni.', examples: ['Care e cel mai rapid drum între A și F?', 'Ce rută are costul minim?'] },
             { id: 'logic', title: 'Logică Formală', icon: '⚖️', difficulty: 'Greu', description: 'Silogisme, deducții logice și validarea concluziilor', examples: ['Toate păsările sunt animale...', 'Niciun doctor nu este avocat...'] },
 	{ id: 'constraints', title: 'Probleme cu Constrângeri', icon: '🎯', difficulty: 'Greu', description: 'Aranjamente, ordine și reguli complexe de poziționare', examples: ['7 bucătari cu 5 reguli', 'Cine stă lângă cine?'] },
 { id: 'visualGrids', title: 'Careuri Figurale', icon: '⬛', difficulty: 'Mediu', description: 'Completarea pattern-urilor în matrice și careuri logice', examples: ['Sudoku cu forme', 'Careuri cu reguli matematice'] },

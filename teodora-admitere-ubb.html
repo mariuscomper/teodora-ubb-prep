@@ -15,13 +15,28 @@
     <!-- Babel for in-browser JSX and TSX transpilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <style>
+<style>
         /* A simple gradient for the border since Tailwind doesn't support it directly on borders */
         .border-gradient-to-r {
             border-image-slice: 1;
             border-image-source: linear-gradient(to right, var(--tw-gradient-stops));
         }
-    </style>
+        
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            .text-5xl { font-size: 2.5rem !important; }
+            .text-4xl { font-size: 2rem !important; }
+            .text-3xl { font-size: 1.75rem !important; }
+            .grid-cols-3 { grid-template-columns: 1fr !important; }
+            .md\\:grid-cols-2 { grid-template-columns: 1fr !important; }
+            .md\\:grid-cols-3 { grid-template-columns: 1fr !important; }
+            .space-x-6 > * + * { margin-left: 0 !important; margin-top: 1rem; }
+            .space-x-3 > * + * { margin-left: 0 !important; margin-top: 0.5rem; }
+            .flex-wrap { flex-direction: column; }
+            .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .py-8 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+        }
+</style>
 </head>
 <body class="bg-gray-50">
 
@@ -1309,7 +1324,326 @@ logic: [
       explanation:
         "Singura combinație coerentă cu «exact două adevărate» este II și III adevărate, I falsă.",
       tip: "Notează A/F pe hârtie pentru toate combinațiile posibile; restricția «exact k» elimină rapid variantele."
-    }
+    },
+     /* 21 - Venn Step by Step 1 */
+  {
+    question: "Pas cu pas cu diagramele Venn: Toți MEDICII sunt OAMENI DE ȘTIINȚĂ. Unii OAMENI DE ȘTIINȚĂ sunt INVENTATORI. Desenați mental: cercul MEDICI în interiorul cercului OAMENI DE ȘTIINȚĂ, iar cercul INVENTATORI se intersectează cu OAMENI DE ȘTIINȚĂ. Care concluzie este validă?",
+    options: [
+      "Unii MEDICI sunt INVENTATORI",
+      "Toți INVENTATORII sunt MEDICI", 
+      "Unii MEDICI pot fi INVENTATORI",
+      "Niciun MEDIC nu este INVENTATOR",
+      "Toți MEDICII sunt INVENTATORI"
+    ],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Desenând diagramele: MEDICI ⊂ OAMENI DE ȘTIINȚĂ, iar INVENTATORI ∩ OAMENI DE ȘTIINȚĂ ≠ ∅. Prin intersecție, UNII medici POT fi inventatori, dar nu e necesar.",
+    tip: "Desenează întotdeauna cercurile înainte să răspunzi. Vizualizarea e cheia!"
+  },
+
+  /* 22 - Venn Step by Step 2 */
+  {
+    question: "Exercițiu Venn vizual: PISICILE sunt FELINE. LEII sunt FELINE. Desenați: un cerc mare FELINE cu două cercuri mai mici înăuntru: PISICI și LEI (care nu se ating). Ce putem concluziona sigur?",
+    options: [
+      "Unele PISICI sunt LEI",
+      "PISICILE și LEII sunt categorii separate în FELINE",
+      "Toți LEII sunt PISICI",
+      "Unii LEI sunt PISICI", 
+      "PISICILE nu sunt FELINE"
+    ],
+    correct: 1,
+    difficulty: "ușor",
+    explanation: "Ambele sunt subseturi disjuncte ale FELINELOR. Vizual: două cercuri separate în interiorul cercului mare.",
+    tip: "Când două categorii sunt în aceeași categorie mare dar separate, ele sunt 'disjuncte'."
+  },
+
+  /* 23 - Knight/Knave Advanced */
+  {
+    question: "Trei locuitori: Ana, Bob, Carol. Ana: 'Bob și Carol sunt de tipuri diferite'. Bob: 'Ana este cavaler'. Carol: 'Eu sunt escroc'. Ce sunt Ana, Bob și Carol?",
+    options: [
+      "Ana=Cavaler, Bob=Cavaler, Carol=Escroc",
+      "Ana=Escroc, Bob=Cavaler, Carol=Escroc", 
+      "Ana=Cavaler, Bob=Escroc, Carol=Cavaler",
+      "Ana=Escroc, Bob=Escroc, Carol=Cavaler",
+      "Imposibil de determinat"
+    ],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Carol nu poate spune 'Eu sunt escroc' (paradox clasic) → Carol trebuie să fie cavaler, dar atunci minte → contradicție. Singurul mod: Carol=escroc care minte despre propria natură. Testând: Ana=cavaler (spune adevărul despre Bob≠Carol), Bob=cavaler (confirmă pe Ana), Carol=escroc.",
+    tip: "La paradoxuri aparente, testează ambele ipoteze sistematic pentru fiecare personaj."
+  },
+
+  /* 24 - Venn Complex */
+  {
+    question: "Desenează mental: STUDENȚII (cerc mare), SPORTIVII (cerc mijlociu, parțial în STUDENȚI), FOTBALIȘTII (cerc mic, în SPORTIVI). Dacă 'Toți FOTBALIȘTII sunt SPORTIVI' și 'Unii SPORTIVI sunt STUDENȚI', care e validă?",
+    options: [
+      "Toți STUDENȚII sunt SPORTIVI",
+      "Unii FOTBALIȘTI pot fi STUDENȚI", 
+      "Niciun FOTBALIST nu e STUDENT",
+      "Toți FOTBALIȘTII sunt STUDENȚI",
+      "Unii STUDENȚI sunt FOTBALIȘTI"
+    ],
+    correct: 1,
+    difficulty: "mediu", 
+    explanation: "FOTBALIȘTI ⊂ SPORTIVI, și SPORTIVI ∩ STUDENȚI ≠ ∅. Prin tranzitivitate, unii fotbaliști POT fi în zona de intersecție cu studenții.",
+    tip: "La 3 cercuri, urmărește traseul: este posibil ca cercul mic să ajungă în zona de intersecție?"
+  },
+
+  /* 25 - Knight/Knave cu logică */
+  {
+    question: "Patru locuitori: A, B, C, D. A: 'Exact doi dintre noi sunt cavaleri'. B: 'A minte'. C: 'B spune adevărul'. D: 'Suntem toți escroci'. Care e distribuția corectă?",
+    options: [
+      "A=Escroc, B=Cavaler, C=Cavaler, D=Escroc",
+      "A=Cavaler, B=Escroc, C=Escroc, D=Escroc",
+      "A=Escroc, B=Escroc, C=Cavaler, D=Cavaler", 
+      "A=Cavaler, B=Cavaler, C=Escroc, D=Escroc",
+      "Imposibil"
+    ],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "D nu poate fi cavaler (ar confirma că toți sunt escroci, contradicție). D=escroc. Testând A=cavaler → sunt exact 2 cavaleri, dar B=escroc (contrazice), C=escroc (susține pe B) → doar 1 cavaler, contradicție cu afirmația lui A. Deci A=escroc, iar 'exact 2 cavaleri' e fals, deci B=cavaler, C=cavaler (confirmă pe B), D=escroc.",
+    tip: "Începe cu afirmațiile universale ('toți', 'niciun') - ele sunt adesea false."
+  },
+
+  /* 26 - Venn cu negații */
+  {
+    question: "Mental Venn: Toate ROZELE sunt FLORI. Nicio FLOARE nu este METAL. Unele OBIECTE ROȘII sunt ROZE. Desenați și găsiți concluzia validă:",
+    options: [
+      "Unele OBIECTE ROȘII nu sunt METAL",
+      "Toate FLORILE sunt OBIECTE ROȘII",
+      "Unele METALE sunt FLORI",
+      "Nicio ROZĂ nu este OBIECT ROȘU", 
+      "Toate ROZELE sunt OBIECTE ROȘII"
+    ],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "ROZE ⊂ FLORI, FLORI ∩ METAL = ∅, OBIECTE ROȘII ∩ ROZE ≠ ∅. Prin lanțul logic: unele obiecte roșii (care sunt roze, care sunt flori) nu pot fi metal.",
+    tip: "Urmărește lanțul: dacă A ∩ B ≠ ∅ și B ∩ C = ∅, atunci A ∩ C = ∅ pentru acele elemente."
+  },
+
+  /* 27 - Knight/Knave cu condiționala */
+  {
+    question: "Insula logicienilor. Alex: 'Dacă eu sunt cavaler, atunci Bob este escroc'. Bob: 'Alex și eu suntem de același tip'. Ce sunt Alex și Bob?",
+    options: [
+      "Alex=Cavaler, Bob=Escroc",
+      "Alex=Escroc, Bob=Cavaler", 
+      "Alex=Cavaler, Bob=Cavaler",
+      "Alex=Escroc, Bob=Escroc",
+      "Ambele variante A și D sunt posibile"
+    ],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Dacă Alex=cavaler → afirmația lui e adevărată → Bob=escroc → Bob minte când spune 'același tip' ✓. Dacă Alex=escroc → afirmația 'dacă eu sunt cavaler...' e adevărată (condiționala cu antecedendul fals) → contradicție. Deci Alex=cavaler, Bob=escroc.",
+    tip: "La condiționale, amintește-te: 'dacă fals, atunci orice' este adevărat."
+  },
+
+  /* 28 - Venn cu 4 categorii */
+  {
+    question: "Diagramă mentală complexă: MAȘINI ⊂ VEHICULE, BICICLETE ⊂ VEHICULE, OBIECTE ROȘII ∩ MAȘINI ≠ ∅, OBIECTE ROȘII ∩ BICICLETE ≠ ∅. Pornind de aici, care NU poate fi adevărată?",
+    options: [
+      "Unele VEHICULE sunt ROȘII",
+      "Toate MAȘINILE sunt ROȘII", 
+      "Niciun VEHICUL nu este ROȘU",
+      "Unele BICICLETE nu sunt ROȘII",
+      "Toate OBIECTELE ROȘII sunt VEHICULE"
+    ],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Dacă unele mașini și unele biciclete sunt roșii, atunci sigur unele vehicule sunt roșii. Opțiunea C contrazice direct premisele.",
+    tip: "La probleme cu 4+ categorii, verifică ce contrazice direct premisele date."
+  },
+
+  /* 29 - Knight/Knave cu paradox */
+  {
+    question: "Cinci locuitori în cerc: A, B, C, D, E. Fiecare spune: 'Cel din dreapta mea este escroc'. Câți cavaleri pot fi maxim?",
+    options: [
+      "0", 
+      "1",
+      "2", 
+      "3",
+      "5"
+    ],
+    correct: 2,
+    difficulty: "greu",
+    explanation: "Dacă A e cavaler → B e escroc → C e cavaler (pentru că B minte) → D e escroc → E e cavaler → A e escroc (contradicție cu ipoteza). Testând sistematic: maxim 2 cavaleri pot fi în poziții non-adiacente.",
+    tip: "În probleme circulare, desenează cercul și testează pattern-urile posibile."
+  },
+
+  /* 30 - Venn cu implicații */
+  {
+    question: "Pas cu pas: 'Dacă ești STUDENT → ești TÂNĂR'. 'Unii TÂNĂI sunt BOGAȚI'. 'Ana este STUDENTĂ și SĂRACĂ'. Ce poți deduce sigur despre Ana?",
+    options: [
+      "Ana este BOGATĂ",
+      "Ana este TÂNĂRĂ", 
+      "Ana nu este TÂNĂRĂ",
+      "Ana poate fi BOGATĂ",
+      "Nu se poate deduce nimic"
+    ],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Ana e studentă → Ana e tânără (prin modus ponens). Faptul că e săracă nu contrazice că e tânără.",
+    tip: "La implicații directe (modus ponens), dacă antecedentul e adevărat, consecventul e garantat adevărat."
+  },
+
+  /* 31 - Knight/Knave cu majoritate */
+  {
+    question: "Șapte locuitori votează. Primul spune: 'Majoritatea dintre noi sunt cavaleri'. Al doilea: 'Nu, majoritatea sunt escroci'. Restul tac. Ce poți deduce?",
+    options: [
+      "Primul e cavaler, al doilea escroc",
+      "Primul e escroc, al doilea cavaler", 
+      "Ambii sunt escroci",
+      "Ambii sunt cavaleri",
+      "Depinde de ceilalți 5"
+    ],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Cele două afirmații se contrazic mutual. Dacă primul e cavaler → majoritatea sunt cavaleri → al doilea (escroc) confirmă că majoritatea sunt escroci → contradicție cu realitatea. Deci primul e escroc, al doilea cavaler.",
+    tip: "Când două afirmații se contrazic complet, exact una e adevărată."
+  },
+
+  /* 32 - Venn cu excluderi multiple */
+  {
+    question: "Vizualizare: ARTISTII nu sunt INGINERI. MEDICII nu sunt ARTIȘTI. PROFESORII pot fi orice. Ana este PROFESOR și ARTIST. Ce NU poate fi Ana?",
+    options: [
+      "MEDIC",
+      "INGINER", 
+      "ARTIST",
+      "PROFESOR",
+      "Atât A cât și B"
+    ],
+    correct: 4,
+    difficulty: "mediu",
+    explanation: "Ana e artist → nu poate fi medic (MEDICI ∩ ARTIȘTI = ∅) și nu poate fi inginer (ARTIȘTI ∩ INGINERI = ∅).",
+    tip: "La excluderi multiple, urmărește toate lanțurile de incompatibilitate."
+  },
+
+  /* 33 - Knight/Knave cu autoreferin */
+  {
+    question: "Meta-logic: A spune: 'Dacă aș fi escroc, aș spune că sunt cavaler'. E A cavaler sau escroc?",
+    options: [
+      "Cavaler",
+      "Escroc", 
+      "Paradox",
+      "Depinde de context",
+      "Ambele sunt posibile"
+    ],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Dacă A e escroc → minte → afirmația lui e falsă → 'dacă aș fi escroc, nu aș spune că sunt cavaler' → dar escrocii mint despre natura lor → contradicție. Deci A e cavaler și spune adevărul.",
+    tip: "La autoreferințe, testează ce ar spune fiecare tip despre propriile afirmații ipotetetice."
+  },
+
+  /* 34 - Venn cu cantități */
+  {
+    question: "Problemă de contorizare: Într-o clasă de 30 elevi: 20 studiază MATE, 15 studiază FIZICĂ, 10 studiază ambele. Câți nu studiază niciuna?",
+    options: [
+      "5",
+      "10", 
+      "15",
+      "0",
+      "Nu se poate calcula"
+    ],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "|M ∪ F| = |M| + |F| - |M ∩ F| = 20 + 15 - 10 = 25 elevi studiază cel puțin una. 30 - 25 = 5 nu studiază niciuna.",
+    tip: "Formula incluziunii-excluziunii: |A ∪ B| = |A| + |B| - |A ∩ B|."
+  },
+
+  /* 35 - Knight/Knave cu lanț */
+  {
+    question: "Lanț logic: A despre B: 'B este escroc'. B despre C: 'C este cavaler'. C despre A: 'A este escroc'. Dacă exact doi sunt cavaleri, care sunt aceștia?",
+    options: [
+      "A și B",
+      "B și C", 
+      "A și C",
+      "Niciuna din combinații",
+      "Toate combinațiile sunt posibile"
+    ],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Testez B și C cavaleri: B(cavaler) spune adevărul → C e cavaler ✓. C(cavaler) spune adevărul → A e escroc ✓. A(escroc) minte → 'B e escroc' e fals → B e cavaler ✓. Consistent!",
+    tip: "În lanțuri logice, testează fiecare combinație și verifică consistența tuturor afirmațiilor."
+  },
+
+  /* 36 - Venn cu relații complexe */
+  {
+    question: "Relații complexe: PĂRINȚII ⊂ ADULȚI. PROFESORII ⊂ ADULȚI. Unii PĂRINȚI sunt PROFESORI. Ana este ADULT dar nu PĂRINTE și nu PROFESOR. Ce categorie sigură pentru Ana?",
+    options: [
+      "ADULT care nu e nici PĂRINTE, nici PROFESOR",
+      "Trebuie să fie PROFESOR", 
+      "Trebuie să fie PĂRINTE",
+      "Informații insuficiente",
+      "Ana nu poate exista"
+    ],
+    correct: 0,
+    difficulty: "ușor",
+    explanation: "ADULȚI include și alte categorii decât PĂRINȚI și PROFESORI. Ana e în restul categoriei ADULȚI.",
+    tip: "O mulțime mare poate conține multe submulțimi care nu se suprapun."
+  },
+
+  /* 37 - Knight/Knave final complex */
+  {
+    question: "Meta-puzzle final: Pe o insulă sunt doar cavaleri și escroci. Un străin întreabă un grup: 'Câți dintre voi sunt escroci?'. Toți răspund în cor: '17!'. Câți erau în grup?",
+    options: [
+      "17", 
+      "18",
+      "34",
+      "Imposibil de determinat",
+      "Întrebarea e invalidă"
+    ],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Niciun cavaler nu va spune că e escroc. Niciun escroc nu va spune numărul real de escroci (ar spune adevărul). Dacă toți spun '17', înseamnă că toți sunt escroci și mint despre numărul lor real. Deci sunt 17 escroci în total.",
+    tip: "În probleme de grup, gândește-te ce ar răspunde fiecare tip la întrebarea dată."
+  },
+
+  /* 38 - Venn cu proprietăți multiple */
+  {
+    question: "Ultimul Venn: MAȘINILE pot fi RAPIDE sau LENTE. MAȘINILE pot fi ROȘII sau ALBASTRE. Toate MAȘINILE RAPIDE ROȘII sunt SCUMPE. Ana are o mașină RAPIDĂ și ROȘIE dar IEFTINĂ. Contradicție?",
+    options: [
+      "Da, Ana nu poate exista",
+      "Nu, Ana poate exista", 
+      "Depinde de alte informații",
+      "Premisele sunt incorecte",
+      "Ana trebuie să aibă două mașini"
+    ],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "Contradicție directă: premise spun că RAPID ∩ ROȘU → SCUMP, dar Ana e RAPID ∩ ROȘU ∩ IEFTIN.",
+    tip: "Verifică dacă exemplul dat respectă toate regulile stabilite în premise."
+  },
+
+  /* 39 - Knight/Knave cu probabilitate */
+  {
+    question: "Joc de probabilitate: Un cavaler și un escroc joacă zaruri. Cavalerul spune: 'Voi câștiga'. Escrocul spune: 'Voi câștiga'. Cine minte?",
+    options: [
+      "Cavalerul",
+      "Escrocul", 
+      "Ambii",
+      "Niciunul",
+      "Depinde de rezultat"
+    ],
+    correct: 4,
+    difficulty: "mediu",
+    explanation: "Ambii își exprimă încrederea/speranța, nu afirmă un fapt. Adevărul se stabilește doar după joc. În momentul afirmației, niciuna nu e minciună.",
+    tip: "Diferența dintre speranță/intenție și afirmație de fapt e crucială în logica Knight/Knave."
+  },
+
+  /* 40 - Venn master final */
+  {
+    question: "Master Venn final: Într-un oraș cu 1000 de locuitori: 600 au MAȘINĂ, 400 au BICICLETĂ, 300 au AMBELE, 200 au doar MAȘINĂ, iar restul au doar BICICLETĂ. Câți nu au niciun vehicul?",
+    options: [
+      "100",
+      "200", 
+      "300",
+      "0",
+      "Datele sunt inconsistente"
+    ],
+    correct: 4,
+    difficulty: "greu",
+    explanation: "Verificare: 300 (ambele) + 200 (doar mașină) = 500, dar trebuie să fie 600 cu mașină. Inconsistență în date.",
+    tip: "Verifică întotdeauna consistența datelor înainte de a calcula!"
+  }
   ],
 
 constraints: [
@@ -1605,7 +1939,7 @@ visualGrids: [
   },
 
   /* 10 */
-{
+  {
     question: "Matrice 3×3 unde fiecare celulă e albă sau neagră. Regula: celulă neagră dacă suma (rând+coloană) e pară. Care celule sunt negre pe rândul 2?",
     options: ["Niciuna", "Doar coloana 2", "Coloanele 1 și 3", "Coloanele 2 și 3", "Toate"],
     correct: 1,
@@ -1662,6 +1996,76 @@ visualGrids: [
     difficulty: "ușor",
     explanation: "R2 îi lipsește □, C4 îi lipsește □ la poziția 2. Convergență: □.",
     tip: "La intersecții, forma trebuie să satisfacă ambele constrângeri."
+  },
+
+  /* 16 */
+  {
+    question: "Matrice 4×4 cu numere 1-16. Regula: numărul din celulă = suma coordonatelor + 1. Ce număr e la poziția [4,2]?",
+    options: ["5", "6", "7", "8", "9"],
+    correct: 2,
+    difficulty: "ușor",
+    explanation: "Poziția [4,2]: 4 + 2 + 1 = 7",
+    tip: "Formula simplă: valoare = rând + coloană + constantă."
+  },
+
+  /* 17 */
+  {
+    question: "Careu 3×3 cu figuri geometrice rotative. Regula: pe fiecare coloană figura se rotește cu 60°. Coloana 2 are: hexagon normal, hexagon rotit 60°, ?",
+    options: ["Hexagon rotit 120°", "Hexagon normal", "Triunghi", "Pentagon", "Hexagon rotit 180°"],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "0° → 60° → 120°. Următorul pas: hexagon rotit cu 120°.",
+    tip: "Pentru rotații regulate, urmărește progressia unghiurilor."
+  },
+
+  /* 18 */
+  {
+    question: "Grilă 2×4 cu litere consecutive. Rândul 1: A,B,C,D. Rândul 2: E,F,G,?. Ce literă urmează?",
+    options: ["H", "I", "A", "D", "Z"],
+    correct: 0,
+    difficulty: "ușor",
+    explanation: "Alfabetul consecutiv: ...E,F,G,H",
+    tip: "Cea mai simplă regulă: continuitatea alfabetului."
+  },
+
+  /* 19 */
+  {
+    question: "Matrice 3×3 cu operații matematice. Fiecare rând: primul număr × 2 + 1 = al treilea număr. R1: 3,×2+1,7✓. R2: 5,×2+1,11✓. R3: 4,×2+1,?",
+    options: ["8", "9", "10", "11", "12"],
+    correct: 1,
+    difficulty: "ușor",
+    explanation: "4 × 2 + 1 = 9",
+    tip: "Operațiile simple în careuri sunt adesea ×2, ÷2, +k, -k."
+  },
+
+  /* 20 */
+  {
+    question: "Careu 4×4 cu culori alb/negru. Regula: o celulă e neagră dacă produsul (rând × coloană) e număr prim. Care dintre pozițiile [2,3], [3,4], [4,5] este neagră?",
+    options: ["Doar [2,3]", "Doar [3,4]", "Doar [4,5]", "[2,3] și [3,4]", "Niciuna"],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "[2,3]: 2×3=6 (nu e prim). [3,4]: 3×4=12 (nu e prim). [4,5]: Nu există în careu 4×4. Din opțiuni, doar [2,3] ar putea fi, dar 6 nu e prim → Niciuna.",
+    tip: "Atenție la limitele careului și la definițiile matematice (prime: 2,3,5,7,11...)."
+  },
+
+  /* 21 */
+  {
+    question: "Matrice cu săgeți care indică direcții cardinale. Regula: fiecare săgeată indică către celula cu valoarea maximă dintre vecinii săi. Centrului unei grile 3×3 cu valori 1,8,3,2,X,4,7,5,6 ce săgeată îi corespunde?",
+    options: ["↑", "→", "↓", "←", "↗"],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Vecinii centrului sunt: 8(sus), 4(dreapta), 5(jos), 2(stânga). Maximul e 8, care e sus → ↑",
+    tip: "Identifică vecinii unei celule și găsește maximul/minimul printre ei."
+  },
+
+  /* 22 */
+  {
+    question: "Careu 5×5 cu domino-uri. Fiecare piesă domino acoperă exact 2 celule adiacente. Câte piese domino încap maximum într-un careu 5×5?",
+    options: ["10", "11", "12", "13", "25"],
+    correct: 2,
+    difficulty: "greu",
+    explanation: "Careu 5×5 = 25 celule. Fiecare domino = 2 celule. 25÷2 = 12.5, deci maxim 12 domino-uri (cu 1 celulă rămasă).",
+    tip: "La probleme de acoperire, împarte aria totală la aria unei piese."
   }
 ],
 
@@ -2478,7 +2882,207 @@ spatial: [
   tip: "Viteza relativă: minutarul face 11 rotații mai mult decât orarul în 12 ore."
 },
 ],
+experimentalDesign: [
+  /* 1 */
+  {
+    question: "Pentru a testa dacă MUZICA influențează CONCENTRAREA, un cercetător împarte 60 de studenți în două grupuri: unul ascultă muzică clasică, altul lucrează în liniște. Ce variabilă este INDEPENDENTĂ?",
+    options: ["Concentrarea", "Muzica (prezentă/absentă)", "Numărul de studenți", "Timpul de lucru", "Vârsta studenților"],
+    correct: 1,
+    difficulty: "ușor",
+    explanation: "Variabila independentă este cea pe care o manipulăm (muzica), iar cea dependentă este cea pe care o măsurăm (concentrarea).",
+    tip: "VI = ce schimb eu, VD = ce măsor eu."
+  },
 
+  /* 2 */
+  {
+    question: "În experimentul de mai sus, pentru a controla variabila VÂRSTĂ, cercetătorul ar trebui să:",
+    options: ["Folosească doar studenți de 20 ani", "Împartă egal vârstele în ambele grupuri", "Ignore complet vârsta", "Măsoare vârsta după experiment", "Folosească doar bărbați"],
+    correct: 1,
+    difficulty: "ușor",
+    explanation: "Controlul unei variabile înseamnă să o distribui egal în toate grupurile experimentale.",
+    tip: "Control = egalitate între grupuri pentru variabila respectivă."
+  },
+
+  /* 3 */
+  {
+    question: "Editură vrea să compare LIMBA (română vs engleză) păstrând TEMA constantă. Din cărțile: Română-Poezie (RP), Română-Roman (RR), Engleză-Istorie (EI), Engleză-Roman (ER), care comparație este validă?",
+    options: ["RP vs ER", "RR vs ER", "RP vs EI", "RR vs EI", "RP vs RR"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Pentru a testa limba păstrând tema constantă, trebuie să compari aceeași temă (Roman) în limbi diferite: RR vs ER.",
+    tip: "Control = păstrează X constant când testezi Y."
+  },
+
+  /* 4 */
+  {
+    question: "Un psiholog testează dacă ILUMINATUL influențează PERFORMANȚA. Grupul A lucrează cu lumină puternică dimineața, grupul B cu lumină slabă seara. Experimentul are probleme deoarece:",
+    options: ["Nu are grup de control", "Confundează iluminatul cu ora zilei", "Are prea puțini participanți", "Nu măsoară corect performanța", "Iluminatul nu poate fi măsurat"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Iluminatul (VI) este confundat cu ora zilei - nu putem ști dacă diferențele vin din lumină sau din momentul zilei.",
+    tip: "Confundarea = când 2+ variabile se schimbă simultan."
+  },
+
+  /* 5 */
+  {
+    question: "Pentru a studia efectul CAFELEI asupra VIGILENȚEI, designul optim ar fi:",
+    options: ["Un grup bea cafea dimineața", "Un grup bea cafea, altul ceai", "Un grup bea cafea, altul nu bea nimic", "Un grup bea cafea adevărată, altul decafenat", "Toți beau cafea în cantități diferite"],
+    correct: 3,
+    difficulty: "mediu",
+    explanation: "Cafeaua adevărată vs decafenat controlează pentru gustul și ritualul băuturii, izolând efectul cofeinei.",
+    tip: "Cel mai bun control mimează toate aspectele exceptând variabila de interes."
+  },
+
+  /* 6 */
+  {
+    question: "Într-un studiu despre METODE DE ÎNVĂȚARE, cercetătorul: 1) Împarte studenții random în 3 grupuri, 2) Fiecare grup folosește o metodă diferită, 3) Măsoară rezultatele după 1 lună. Procedăm astfel deoarece:",
+    options: ["Randomizarea elimină bias-ul selecției", "Este mai rapid decât alte metode", "Rezultatele sunt mai ușor de interpretat", "Se evită problemele etice", "Costă mai puțin"],
+    correct: 0,
+    difficulty: "mediu",
+    explanation: "Randomizarea asigură că diferențele individuale se distribuie egal între grupuri, eliminând bias-ul de selecție.",
+    tip: "Randomizarea = fiecare participant are șanse egale în orice grup."
+  },
+
+  /* 7 */
+  {
+    question: "Un cercetător vrea să testeze dacă EXERCIȚIILE fizice îmbunătățesc MEMORIA. Grup A: exerciții 30 min + test memorie. Grup B: odihnă 30 min + test memorie. Ce problemă poate apărea?",
+    options: ["Exercițiile sunt prea scurte", "Lipsește măsurarea inițială (pre-test)", "Prea puțini participanți", "Testul de memorie este prea ușor", "Nu specifică tipul de exerciții"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Fără măsurarea inițială nu știm dacă diferențele post-test vin din intervenție sau existau deja anterior.",
+    tip: "Design pre-post este mai puternic decât doar post-test."
+  },
+
+  /* 8 */
+  {
+    question: "Pentru studiul 'CULOAREA camerei și CREATIVITATEA', un designer testează: Camera roșie vs Camera albastră. Pentru validitate, trebuie să controleze:",
+    options: ["Doar temperatura", "Doar luminozitatea", "Doar dimensiunea", "Temperatura, luminozitatea și dimensiunea", "Nu trebuie să controleze nimic"],
+    correct: 3,
+    difficulty: "greu",
+    explanation: "Toate variabilele fizice ale camerei (temperatură, luminozitate, dimensiune) pot influența creativitatea independent de culoare.",
+    tip: "În experimente complexe, identifică TOATE variabilele confundate posibile."
+  },
+
+  /* 9 */
+  {
+    question: "Studiu longitudinal: măsoară STRESUL la studenți în 4 momente (septembrie, decembrie, martie, iunie). Problema principală a acestui design este:",
+    options: ["Prea multe măsurători", "Efectul de practicare la test", "Studiul durează prea mult", "Stresul nu poate fi măsurat valid", "Nu are grup de control"],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Măsurările repetate pot produce efecte de practicare - participanții devin mai buni la test independent de stresul real.",
+    tip: "Design-uri longitudinale: atenție la efectele de testare repetată."
+  },
+
+  /* 10 */
+  {
+    question: "Meta-analiză asupra a 50 de studii despre TERAPIE și DEPRESIE. Cercetătorii găsesc că studiile cu eșantioane mici raportează efecte mai mari. Explicația probabilă:",
+    options: ["Eșantioanele mici sunt mai diverse", "Bias-ul de publicare (doar rezultatele pozitive sunt publicate)", "Terapia funcționează mai bine cu puțini oameni", "Studiile mici sunt mai bine controlate", "Depresiile sunt diferite în studiile mici"],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Bias-ul de publicare: studiile mici cu rezultate nesemnificative rămân nepublicate, distorsionând literatura.",
+    tip: "Meta-analize: atenție la bias-urile de publicare și selecție."
+  },
+
+  /* 11 */
+  {
+    question: "Pentru a testa dacă GENUL influențează AGRESIVITATEA, cercetătorul compară băieți vs fete la jocuri competitive. Variabila dependentă este:",
+    options: ["Genul participanților", "Tipul jocului", "Nivelul de agresivitate măsurat", "Vârsta participanților", "Durata jocului"],
+    correct: 2,
+    difficulty: "ușor",
+    explanation: "Variabila dependentă este cea măsurată (agresivitatea), nu cea manipulată (genul).",
+    tip: "VD = rezultatul, ceea ce se măsoară la sfârșitul experimentului."
+  },
+
+  /* 12 */
+  {
+    question: "Un farmacolog testează un nou medicament. Grupul experimental primește medicamentul, grupul control primește placebo identic. De ce e important ca medicamentul și placebo să arate identic?",
+    options: ["E mai ieftin să le faci la fel", "Pentru a controla efectul de așteptare", "Pacienții nu trebuie să știe că participă", "Să fie mai ușor de administrat", "Nu are importanță aspectul"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Aspectul identic previne ca participanții să știe ce grup sunt, eliminând bias-ul de așteptare.",
+    tip: "Double-blind = nici participantul, nici experimentatorul nu știu grupul."
+  },
+
+  /* 13 */
+  {
+    question: "Studiu: 'Efectul TEMPERATURII asupra VITEZEI de reacție'. Grupa A: 18°C, Grupa B: 25°C, Grupa C: 32°C. Ce tip de design experimental este?",
+    options: ["Experimental simplu", "Factorial", "Quasi-experimental", "Between-subjects", "Within-subjects"],
+    correct: 3,
+    difficulty: "mediu",
+    explanation: "Between-subjects = participanți diferiți în fiecare condiție (vs. within-subjects = aceeași persoană în toate condițiile).",
+    tip: "Between = între grupuri. Within = în interiorul aceluiași grup."
+  },
+
+  /* 14 */
+  {
+    question: "Pentru a elimina efectele de ordine într-un experiment cu 3 condiții (A, B, C), cel mai bun design este:",
+    options: ["Toți participanții: A→B→C", "Randomizează ordinea pentru fiecare participant", "Împarte în 3 grupuri: ABC, BCA, CAB", "Counterbalancing complet (toate ordinile posibile)", "Folosește doar 2 condiții"],
+    correct: 3,
+    difficulty: "greu",
+    explanation: "Counterbalancing complet înseamnă că toate ordinile posibile (ABC, ACB, BAC, BCA, CAB, CBA) sunt reprezentate egal.",
+    tip: "Pentru n condiții, ai n! ordini posibile de contrabalansat."
+  },
+
+  /* 15 */
+  {
+    question: "Un cercetător vrea să testeze eficacitatea unei noi metode de predare. Împarte o școală în 2: jumătate folosește metoda nouă, jumătate metoda tradițională. Principala problemă:",
+    options: ["Nu e randomizare la nivel individual", "Efectul Hawthorne", "Nu are grup control", "Durează prea puțin", "Școala e prea mică"],
+    correct: 0,
+    difficulty: "greu",
+    explanation: "Randomizarea la nivel de clasă/școală, nu individual, poate introduce confundări (ex. profesori diferiți, resurse diferite).",
+    tip: "Unitatea de randomizare afectează validitatea: individual > clasă > școală."
+  },
+
+  /* 16 */
+  {
+    question: "Efectul 'regresiei către medie' apare când:",
+    options: ["Participanții se retrag din studiu", "Scorurile extreme tind să devină mai moderate la re-testare", "Măsurătorile nu sunt precise", "Grupurile nu sunt echivalente", "Experimentul durează prea mult"],
+    correct: 1,
+    difficulty: "greu",
+    explanation: "Scorurile foarte mari sau foarte mici la primul test tind să fie mai apropiate de medie la al doilea test, din cauza erorii de măsurare.",
+    tip: "Regresie către medie = artifactul statistic care 'trage' extremele spre centru."
+  },
+
+  /* 17 */
+  {
+    question: "Pentru a studia impactul PUBLICITĂȚII asupra COMPORTAMENTULUI de cumpărare, cercetătorul: Grupa A vede reclame emoționale, Grupa B vede reclame informative, Grupa C nu vede reclame. Grupa C este:",
+    options: ["Grup experimental", "Grup de control activ", "Grup de control passiv", "Grup placebo", "Grup de validare"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Grupa C (fără reclame) este control passiv = nu primește niciun tratament.",
+    tip: "Control activ = primește ceva, dar nu tratamentul testat. Control passiv = nu primește nimic."
+  },
+
+  /* 18 */
+  {
+    question: "Într-un experiment 2×2 factorial (CULOARE: roșu/albastru × MĂRIME: mic/mare), câte condiții experimentale există?",
+    options: ["2", "3", "4", "6", "8"],
+    correct: 2,
+    difficulty: "mediu",
+    explanation: "Design factorial 2×2 = 2 nivele × 2 nivele = 4 condiții: roșu-mic, roșu-mare, albastru-mic, albastru-mare.",
+    tip: "În design factorial, înmulțești nivelele fiecărei variabile."
+  },
+
+  /* 19 */
+  {
+    question: "Un psiholog compară două terapii (A și B) pentru anxietate. Pentru a evita bias-ul experimentatorului, cea mai bună soluție:",
+    options: ["Folosește doar terapia A", "Terapeuții nu știu ce tip de terapie aplică", "Folosește mai mulți terapeuți", "Măsoară anxietatea obiectiv", "Randomizează pacienții"],
+    correct: 1,
+    difficulty: "mediu",
+    explanation: "Bias-ul experimentatorului se previne prin 'blinding' - terapeuții nu trebuie să știe care terapie aplică.",
+    tip: "Single-blind = participantul nu știe. Double-blind = nici participantul, nici experimentatorul nu știu."
+  },
+
+  /* 20 */
+  {
+    question: "Validitatea INTERNĂ a unui experiment se referă la:",
+    options: ["Cât de bine se generalizează rezultatele", "Cât de precise sunt măsurătorile", "Căt de siguri suntem că VI a cauzat schimbarea în VD", "Cât de reprezentativ e eșantionul", "Cât de lung e studiul"],
+    correct: 2,
+    difficulty: "greu",
+    explanation: "Validitatea internă = gradul de încredere că variabila independentă a cauzat cu adevărat schimbarea în variabila dependentă.",
+    tip: "Internă = cauzalitate. Externă = generalizare. De construct = măsurători corecte."
+  }
+],
 math: [
   /* 1 - Tip Procente & Mulțimi */
   { 
@@ -2730,7 +3334,22 @@ constraints: {
   ] 
 },
             spatial: { title: "🧩 Strategii pentru Gândire Spațială", tips: [ { title: "🔄 Catalog de transformări", content: "1. Rotații: 90°, 180°, 270°. 2. Reflexii: orizontală, verticală. 3. Translații: deplasare pozițională.", example: "Cercul se mută în sens orar: stânga-sus → dreapta-sus → dreapta-jos → stânga-jos" } ] },
-            math: { title: "🧮 Strategii pentru Matematică", tips: [ { title: "📊 Probleme cu mulțimi", content: "Pentru minim: suma - 100%. Pentru maxim: minimul dintre valori.", example: "75% + 60% - 100% = 35% minim pentru intersecție" } ] }
+            math: { title: "🧮 Strategii pentru Matematică", tips: [ { title: "📊 Probleme cu mulțimi", content: "Pentru minim: suma - 100%. Pentru maxim: minimul dintre valori.", example: "75% + 60% - 100% = 35% minim pentru intersecție" } ] },
+            experimentalDesign: { 
+  title: "🔬 Strategii pentru Design Experimental", 
+  tips: [ 
+    { 
+      title: "🎯 Identificarea Variabilelor (VI vs. VD)", 
+      content: "Primul pas este să identifici clar ce anume manipulezi (Variabila Independentă - VI) și ce anume măsori ca rezultat (Variabila Dependentă - VD). VI este cauza, VD este efectul.", 
+      example: "În studiul 'Efectul cafelei asupra memoriei', VI este consumul de cafea (prezent/absent), iar VD este scorul obținut la testul de memorie." 
+    },
+    { 
+      title: "🛡️ Controlul Variabilelor Confundate", 
+      content: "Asigură-te că doar VI diferă între grupul experimental și cel de control. Orice altă variabilă care se schimbă odată cu VI este o 'variabilă confundată' și invalidează experimentul (de ex. ora zilei, zgomotul, temperatura camerei).", 
+      example: "Dacă grupul experimental lucrează dimineața, iar grupul de control lucrează seara, nu poți ști dacă rezultatele diferite se datorează intervenției tale sau pur și simplu momentului zilei." 
+    }
+  ] 
+}
           };
           const relevanceTips = {
   sequences: "În admiterea 2023, 8 din 40 de întrebări (20% din examen!) au fost șiruri. Stăpânirea lor este esențială pentru un punctaj mare.",
@@ -2742,7 +3361,8 @@ constraints: {
   visualGrids: "Careurile testează atenția la detalii și gândirea structurată. Au fost 3 probleme în 2023. Verificarea pe rânduri, coloane și diagonale este metoda sigură.",
   visualAnalogies: "Acestea sunt printre cele mai dificile, testând inteligența fluidă. Au fost 3 probleme în 2023. Descompunerea transformării (rotație, umplere, adăugare) este secretul.",
   spatial: "Gândirea spațială, inclusiv desfășurări de cuburi, a fost prezentă cu 2 probleme în 2023. Abilitatea de a roti și plia mental obiecte este crucială.",
-  math: "O singură problemă de matematică de bază în 2023, dar este un punct garantat dacă stăpânești procente și probabilități simple."
+  math: "O singură problemă de matematică de bază în 2023, dar este un punct garantat dacă stăpânești procente și probabilități simple.",
+  experimentalDesign: "În admiterea din 2022, un întreg set de 4 întrebări (37-40) a fost dedicat exclusiv acestui subiect! Acest lucru arată că UBB consideră esențială capacitatea ta de a gândi ca un cercetător: să înțelegi cum se controlează variabilele (ce menții constant, ce schimbi) pentru a trage o concluzie validă. Stăpânirea acestei secțiuni nu doar că îți aduce puncte valoroase, dar îți demonstrează că ai deja mentalitatea necesară pentru Facultatea de Psihologie."
 };
 
           const mentalToolkits = [
@@ -2760,8 +3380,9 @@ constraints: {
 	{ id: 'constraints', title: 'Probleme cu Constrângeri', icon: '🎯', difficulty: 'Greu', description: 'Aranjamente, ordine și reguli complexe de poziționare', examples: ['7 bucătari cu 5 reguli', 'Cine stă lângă cine?'] },
 { id: 'visualGrids', title: 'Careuri Figurale', icon: '⬛', difficulty: 'Mediu', description: 'Completarea pattern-urilor în matrice și careuri logice', examples: ['Sudoku cu forme', 'Careuri cu reguli matematice'] },
 { id: 'visualAnalogies', title: 'Analogii Vizuale', icon: '🔄', difficulty: 'Greu', description: 'Transformări figurale și relații vizuale complexe', examples: ['Ce este A pentru B', 'Rotații și reflexii compuse'] },
-            { id: 'spatial', title: 'Gândire Spațială', icon: '🧩', difficulty: 'Mediu', description: 'Transformări geometrice, rotații și completarea careurilor', examples: ['Rotații 45°', 'Progresii în spațiu', 'Analogii figurale'] },
-            { id: 'math', title: 'Probleme Matematice', icon: '🧮', difficulty: 'Mediu', description: 'Procente, probabilități, progresii și calcule rapide', examples: ['Probabilități cu monede', 'Variații procentuale', 'Medii aritmetice'] },
+{ id: 'math', title: 'Probleme Matematice', icon: '🧮', difficulty: 'Mediu', description: 'Procente, probabilități, progresii și calcule rapide', examples: ['Probabilități cu monede', 'Variații procentuale', 'Medii aritmetice'] },
+{ id: 'spatial', title: 'Gândire Spațială', icon: '🧩', difficulty: 'Mediu', description: 'Transformări geometrice, rotații și completarea careurilor', examples: ['Rotații 45°', 'Progresii în spațiu', 'Analogii figurale'] },
+{ id: 'experimentalDesign', title: 'Design Experimental', icon: '🔬', difficulty: 'Greu', description: 'Controlul variabilelor, validitate și metodologia cercetării științifice', examples: ['VI vs VD', 'Grupuri control', 'Confundări experimentale'] },
 { id: 'examMode', title: 'Simulare Examen', icon: '📝', difficulty: 'Examen', description: 'Test complet 40 întrebări, 90 minute', examples: ['Mix din toate categoriile', 'Timer real + rezultate'] }
           ];
 
@@ -2878,7 +3499,7 @@ constraints: {
     const progress = totalCount > 0 ? (answeredCount / totalCount) * 100 : 0;
 
     return (
-        <div key={type.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500 flex flex-col justify-between">
+        <div key={type.id} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500 flex flex-col justify-between">
             <div>
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
